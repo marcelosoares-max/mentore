@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blip × Mêntore — IA aplicada ao atendimento financeiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:    #129E8C;
+  --blip:   #1CC8EE;
+  --green:  #00C26F;
+  --orange: #FF6B00;
+  --purple: #9333EA;
+  --dark:   #0C1018;
+  --card:   #141C26;
+  --card2:  #101820;
+  --text:   #F0F4F8;
+  --muted:  #7A90A8;
+  --white:  #FFFFFF;
+  --wa-bg:  #ECE5DD;
+  --wa-in:  #FFFFFF;
+  --wa-out: #DCF8C6;
+  --wa-hdr: #128C7E;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Sora',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  background:linear-gradient(150deg,#080C10 0%,#06141A 50%,#0A1520 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:3rem 2rem;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(18,158,140,.14) 0%,transparent 70%);
+  top:-250px;left:-250px;pointer-events:none}
+.hero::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(28,200,238,.08) 0%,transparent 70%);
+  bottom:-150px;right:-150px;pointer-events:none}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(18,158,140,.12);border:1px solid rgba(18,158,140,.3);
+  border-radius:100px;padding:6px 20px;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:#5FE0CB;margin-bottom:2.5rem;position:relative;
+}
+.hero-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--red);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.logos-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:2.5rem;flex-wrap:wrap;justify-content:center}
+.logo-pill{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;padding:10px 22px;font-weight:700;font-size:1rem;
+}
+.lp-red{color:var(--red)} .lp-blue{color:var(--blip)} .lp-x{color:var(--muted);font-size:1.2rem}
+
+.hero h1{
+  font-size:clamp(2.4rem,6vw,5rem);font-weight:800;line-height:1.08;margin-bottom:1.5rem;
+  background:linear-gradient(135deg,#fff 0%,#9CF0E2 45%,var(--blip) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:clamp(.95rem,2vw,1.2rem);color:var(--muted);max-width:600px;line-height:1.75;margin-bottom:3rem}
+
+.hero-chips{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-bottom:3rem}
+.hero-chip{
+  padding:8px 18px;border-radius:100px;font-size:.8rem;font-weight:600;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text);
+}
+.hero-chip.red{background:rgba(18,158,140,.1);border-color:rgba(18,158,140,.3);color:#5FE0CB}
+.hero-chip.blue{background:rgba(28,200,238,.1);border-color:rgba(28,200,238,.3);color:var(--blip)}
+.hero-chip.green{background:rgba(0,194,111,.1);border-color:rgba(0,194,111,.3);color:var(--green)}
+
+.scroll-hint{color:var(--muted);font-size:.78rem;display:flex;flex-direction:column;align-items:center;gap:5px;animation:bob 2.2s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+/* ── NAV ── */
+.sticky-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(12,16,24,.95);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(18,158,140,.15);
+  padding:0 2rem;overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+.nav-inner{display:flex;align-items:center;min-width:max-content}
+.nav-tab{
+  padding:.9rem 1rem;font-size:.74rem;font-weight:600;color:var(--muted);
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;
+  white-space:nowrap;text-decoration:none;display:block;
+}
+.nav-tab:hover{color:var(--red)}
+.nav-tab.active{color:var(--red);border-bottom-color:var(--red)}
+
+/* ── SECTION HELPERS ── */
+.section{padding:6rem 2rem;max-width:1300px;margin:0 auto}
+.eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.65rem}
+.eyebrow.blue{color:var(--blip)}
+.eyebrow.green{color:var(--green)}
+.section-title{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.15;margin-bottom:1rem}
+.section-desc{color:var(--muted);font-size:1rem;line-height:1.75;max-width:580px;margin-bottom:2.5rem}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(18,158,140,.18),transparent);margin:0 2rem}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:1.5rem}
+.card:hover{border-color:rgba(18,158,140,.3);transition:border-color .25s}
+.card2{background:var(--card2);border:1px solid rgba(255,255,255,.05);border-radius:14px;padding:1.25rem}
+
+/* ── LAYOUT SPLIT ── */
+.split{display:grid;grid-template-columns:1fr 330px;gap:4rem;align-items:start}
+.split.rev{grid-template-columns:330px 1fr}
+.split.rev .phone-col{order:-1}
+@media(max-width:900px){.split,.split.rev{grid-template-columns:1fr}.split.rev .phone-col{order:0}.phone-col{display:flex;justify-content:center}}
+
+/* ── STAT BOX ── */
+.stat-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.stat-box{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:1rem 1.25rem;flex:1;min-width:110px}
+.stat-box.red{border-color:rgba(18,158,140,.3)}.stat-box.green{border-color:rgba(0,194,111,.25)}.stat-box.blue{border-color:rgba(28,200,238,.25)}
+.stat-val{font-family:'Space Mono',monospace;font-size:1.4rem;font-weight:700;line-height:1;margin-bottom:3px}
+.sv-red{color:var(--red)}.sv-green{color:var(--green)}.sv-blue{color:var(--blip)}
+.stat-lbl{font-size:.67rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* ── TAGS ── */
+.tag-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:1.5rem}
+.tag{font-size:.7rem;font-weight:600;padding:4px 12px;border-radius:100px;border:1px solid}
+.tr{color:#5FE0CB;border-color:rgba(18,158,140,.4);background:rgba(18,158,140,.08)}
+.tb{color:var(--blip);border-color:rgba(28,200,238,.3);background:rgba(28,200,238,.08)}
+.tg{color:var(--green);border-color:rgba(0,194,111,.3);background:rgba(0,194,111,.08)}
+.to{color:var(--orange);border-color:rgba(255,107,0,.3);background:rgba(255,107,0,.08)}
+.tp{color:#C084FC;border-color:rgba(147,51,234,.3);background:rgba(147,51,234,.08)}
+
+/* ── FLOW STEPS ── */
+.flow-steps{display:flex;flex-direction:column;gap:0}
+.fs-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;position:relative}
+.fs-item:not(:last-child)::after{content:'';position:absolute;left:14px;top:32px;width:1px;height:calc(100% - 8px);background:rgba(18,158,140,.22)}
+.fs-num{width:28px;height:28px;border-radius:50%;background:rgba(18,158,140,.14);border:1px solid rgba(18,158,140,.32);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#5FE0CB;flex-shrink:0}
+.fs-body{font-size:.82rem;color:var(--muted);padding-top:5px;line-height:1.55}
+.fs-body strong{color:var(--text)}
+
+/* ── INSIGHT GRID ── */
+.insight-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
+@media(max-width:600px){.insight-grid{grid-template-columns:1fr}}
+.ig-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:1.1rem}
+.ig-icon{font-size:1.4rem;margin-bottom:.55rem}
+.ig-title{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem}
+.ig-text{font-size:.76rem;color:var(--muted);line-height:1.6}
+
+/* ── PHONE / WHATSAPP ── */
+.phone-wrap{width:300px;position:relative}
+.phone-frame{
+  width:300px;height:610px;background:#111;
+  border-radius:44px;border:8px solid #222;overflow:hidden;
+  box-shadow:0 0 0 1px #333,0 30px 80px rgba(0,0,0,.7);
+}
+.phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:110px;height:26px;background:#111;border-radius:0 0 18px 18px;z-index:10;display:flex;align-items:center;justify-content:center;gap:5px}
+.nc{width:9px;height:9px;border-radius:50%;background:#1a1a1a;border:1px solid #333}
+.ns{width:46px;height:4px;border-radius:3px;background:#1a1a1a;border:1px solid #333}
+
+.wa{width:100%;height:100%;display:flex;flex-direction:column;background:var(--wa-bg);font-family:-apple-system,'Helvetica Neue',sans-serif;overflow:hidden}
+.wa-hdr{background:var(--wa-hdr);padding:30px 10px 9px;display:flex;align-items:center;gap:9px;flex-shrink:0;min-height:68px}
+.wa-av{width:34px;height:34px;border-radius:50%;background:#0E6B5E;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
+.wa-ci{flex:1;min-width:0}
+.wa-cn{font-size:.86rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-cs{font-size:.68rem;color:rgba(255,255,255,.65)}
+.wa-ha{display:flex;gap:12px;color:rgba(255,255,255,.8);font-size:.95rem}
+
+.wa-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:9px 7px;display:flex;flex-direction:column;gap:3px;min-height:0;scroll-behavior:smooth}
+.wa-body::-webkit-scrollbar{width:2px}
+.wa-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);border-radius:2px}
+
+.date-chip{align-self:center;background:rgba(225,245,254,.9);color:#546E7A;font-size:.62rem;padding:3px 9px;border-radius:9px;margin:5px 0;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.msg{max-width:82%;padding:7px 9px 5px;border-radius:8px;font-size:11.5px;line-height:1.4;color:#111;word-break:break-word;box-shadow:0 1px 0.5px rgba(0,0,0,.12)}
+.msg-in{background:var(--wa-in);align-self:flex-start;border-top-left-radius:0}
+.msg-out{background:var(--wa-out);align-self:flex-end;border-top-right-radius:0}
+.msg-time{font-size:.58rem;color:rgba(0,0,0,.38);text-align:right;margin-top:3px}
+.msg-out .msg-time::after{content:' ✓✓';color:#4FC3F7}
+
+.wa-block{display:flex;flex-direction:column;max-width:87%;margin-bottom:1px}
+.wa-block-out{align-self:flex-end;margin-left:auto}
+.wa-block .msg-in{border-radius:0 8px 8px 8px;max-width:100%}
+.wa-block .msg-out{border-radius:8px 0 8px 8px;max-width:100%}
+.no-br-btns{border-radius:0 8px 0 0 !important}
+.wa-btns-wrap{background:#fff;border-radius:0 0 8px 8px;overflow:hidden;box-shadow:0 1px 0.5px rgba(0,0,0,.12)}
+.wa-btn{background:#fff;border:none;border-top:1px solid #eee;padding:8px 7px;font-size:11px;font-weight:500;color:#00A884;cursor:pointer;width:100%;text-align:center;font-family:-apple-system,'Helvetica Neue',sans-serif;transition:background .12s}
+.wa-btn:hover{background:#f5f5f5}
+
+.bot-label{background:rgba(18,158,140,.12);border:1px solid rgba(18,158,140,.28);border-radius:4px;padding:1px 5px;font-size:8.5px;color:#0E7A6B;font-weight:700;display:inline-block;margin-bottom:3px}
+
+.wa-input-bar{display:flex;align-items:center;gap:7px;padding:7px;background:#f0f0f0;flex-shrink:0}
+.wa-inp{flex:1;background:#fff;border:none;border-radius:20px;padding:6px 11px;font-size:11.5px;outline:none;color:#111}
+.wa-send{width:32px;height:32px;border-radius:50%;background:#25D366;border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:.8rem}
+
+.msg-t{font-size:9.5px;color:rgba(0,0,0,.38);float:right;margin-left:5px;margin-top:1px;line-height:1}
+.msg-t.out{color:#4FC3F7}
+
+/* ── STEP CONTROLS ── */
+.ctrl-row{display:flex;justify-content:center;padding:1.25rem 2rem 0;flex-wrap:wrap;gap:7px}
+.ctrl-btn{padding:7px 14px;border-radius:8px;border:1px solid rgba(18,158,140,.3);background:transparent;color:#5FE0CB;font-size:.77rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Sora',sans-serif}
+.ctrl-btn:hover{background:rgba(18,158,140,.1)}
+.ctrl-btn.active{background:rgba(18,158,140,.16);border-color:var(--red)}
+.rst-btn{padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.09);background:transparent;color:var(--muted);font-size:.75rem;cursor:pointer;font-family:'Sora',sans-serif;transition:all .2s}
+.rst-btn:hover{color:#fff;border-color:rgba(255,255,255,.25)}
+
+.msg-step{display:none}
+.msg-step.on{display:flex;flex-direction:column;gap:3px}
+
+/* ── BENCHMARK TABLE ── */
+.bench-wrap{overflow-x:auto;border-radius:16px;border:1px solid rgba(255,255,255,.07)}
+.bench-table{width:100%;border-collapse:collapse;font-size:.76rem;min-width:760px}
+.bench-table th,.bench-table td{padding:.7rem .6rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.bench-table th{background:var(--card2);color:var(--muted);font-weight:700;font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.bench-table td:first-child,.bench-table th:first-child{text-align:left;color:var(--text);font-weight:600;white-space:nowrap;position:sticky;left:0;background:var(--card2)}
+.bench-table tr:hover td{background:rgba(255,255,255,.03)}
+.bench-yes{color:var(--green);font-weight:700}
+.bench-no{color:#FF7070}
+.bench-q{color:#FFC94D}
+.bench-legend{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1rem;font-size:.74rem;color:var(--muted)}
+
+/* ── DIVISIONS / OPP GRID ── */
+.div-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:2rem}
+.div-card{border-radius:16px;padding:1.5rem;border:1px solid}
+.div-b2b{background:rgba(18,158,140,.07);border-color:rgba(18,158,140,.22)}
+.div-b2c{background:rgba(255,107,0,.07);border-color:rgba(255,107,0,.2)}
+.div-ben{background:rgba(28,200,238,.07);border-color:rgba(28,200,238,.2)}
+.div-zup{background:rgba(147,51,234,.07);border-color:rgba(147,51,234,.2)}
+.div-icon{font-size:2rem;margin-bottom:.7rem}
+.div-title{font-size:.95rem;font-weight:700;margin-bottom:.4rem}
+.div-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
+.div-opp{margin-top:.75rem;font-size:.72rem;font-weight:700;color:var(--blip)}
+
+/* ── BLIP CRED ── */
+.cred-box{
+  background:linear-gradient(135deg,#0A1520 0%,#0A1A18 100%);
+  border:1px solid rgba(28,200,238,.2);border-radius:20px;padding:2.5rem;
+  position:relative;overflow:hidden;
+}
+.cred-box::before{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(28,200,238,.06) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.cred-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:.75rem}
+.cred-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:600px;margin-bottom:2rem}
+.cred-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+.cred-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1.25rem}
+.cred-step-num{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--blip);font-weight:700;margin-bottom:.6rem;letter-spacing:.08em}
+.cred-step-title{font-size:.9rem;font-weight:700;margin-bottom:.4rem}
+.cred-step-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
+
+/* ── CTA ── */
+.cta-section{
+  background:linear-gradient(150deg,#040E0C 0%,#0D1520 100%);
+  padding:6rem 2rem;text-align:center;position:relative;overflow:hidden;
+}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(18,158,140,.07) 0%,transparent 70%)}
+.cta-title{font-size:clamp(2rem,4.5vw,3.8rem);font-weight:800;margin-bottom:1.5rem;position:relative}
+.cta-sub{color:var(--muted);font-size:1.05rem;max-width:520px;margin:0 auto 3rem;line-height:1.7;position:relative}
+.cta-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:820px;margin:0 auto 3rem;position:relative}
+@media(max-width:760px){.cta-steps{grid-template-columns:repeat(2,1fr)}}
+.cta-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1.5rem;text-align:center}
+.cta-step.highlight{border-color:rgba(18,158,140,.3)}
+.cs-icon{font-size:1.6rem;margin-bottom:.6rem}
+.cs-title{font-size:.82rem;font-weight:700;margin-bottom:.4rem}
+.cs-desc{font-size:.74rem;color:var(--muted);line-height:1.55}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-weight:700;font-size:.95rem;padding:14px 30px;border-radius:100px;text-decoration:none;position:relative;transition:transform .2s,box-shadow .2s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(18,158,140,.4)}
+
+footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted);font-size:.78rem;border-top:1px solid rgba(255,255,255,.05)}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-badge">✦ Mêntore × Blip · Junho 2026</div>
+
+  <div class="logos-row">
+    <div class="logo-pill lp-red">🏦 Mêntore</div>
+    <span class="lp-x">+</span>
+    <div class="logo-pill lp-blue">💬 Blip</div>
+  </div>
+
+  <h1>Do atendimento ao<br>negócio financeiro.</h1>
+
+  <p class="hero-sub">
+    A Mêntore já usa a Blip no atendimento via WhatsApp. A oportunidade agora é outra: aplicar IA para apoiar os atendentes com sugestões inteligentes e abrir o canal para recuperação de crédito, oferta de produtos e jornadas transacionais com segurança.
+  </p>
+
+  <!-- AI-driven outcomes visual -->
+  <div style="display:flex;align-items:center;gap:0;margin-bottom:2.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1.25rem 1.75rem;max-width:600px;flex-wrap:wrap;justify-content:center;gap:1rem">
+    <div style="text-align:center;flex:1;min-width:140px">
+      <div style="font-size:1.6rem;margin-bottom:.3rem">📉</div>
+      <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.2rem">A dor</div>
+      <div style="font-size:.72rem;color:var(--muted);line-height:1.5">Operação ainda sem maturidade.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--blip);font-size:.72rem;font-weight:700;flex-shrink:0">
+      <div style="width:1px;height:28px;background:rgba(28,200,238,.3)"></div>
+      <span style="background:rgba(28,200,238,.12);border:1px solid rgba(28,200,238,.3);border-radius:100px;padding:3px 10px;white-space:nowrap">Copilot + Casos de uso</span>
+      <div style="width:1px;height:28px;background:rgba(28,200,238,.3)"></div>
+    </div>
+    <div style="text-align:center;flex:1;min-width:140px">
+      <div style="font-size:1.6rem;margin-bottom:.3rem">📈</div>
+      <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.2rem">O resultado</div>
+      <div style="font-size:.72rem;color:var(--muted);line-height:1.5">Atendentes mais rápidos, mais recuperação de crédito e novos produtos vendidos no mesmo canal de hoje.</div>
+    </div>
+  </div>
+
+  <div class="hero-chips">
+    <span class="hero-chip green">✓ Parceria já existente</span>
+    <span class="hero-chip blue">IA como apoio ao atendente — com espaço para evoluir à autonomia sem grande integração</span>
+  </div>
+
+  <div class="scroll-hint">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    Ver possibilidades
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     NAV
+══════════════════════════════════════ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a href="#contexto"     class="nav-tab">Contexto</a>
+    <a href="#benchmark"    class="nav-tab">Benchmark</a>
+    <a href="#comparativo"  class="nav-tab">Determinístico × IA</a>
+    <a href="#recuperacao"  class="nav-tab">Recuperação</a>
+    <a href="#cartao"       class="nav-tab">Oferta de Cartão</a>
+    <a href="#biometria"    class="nav-tab">Biometria</a>
+    <a href="#duvidas"      class="nav-tab">Dúvidas com IA</a>
+    <a href="#copilot"      class="nav-tab">Copilot</a>
+    <a href="#blipcred"     class="nav-tab">Blip Cred</a>
+    <a href="#cta"          class="nav-tab">Próximos Passos</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     CONTEXTO
+══════════════════════════════════════ -->
+<section id="contexto">
+  <div class="section">
+    <div class="eyebrow">Diagnóstico</div>
+    <h2 class="section-title">Atendimento maduro no WhatsApp. A IA ainda precisa provar valor antes de virar agente autônomo.</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;margin-bottom:3rem">
+
+      <div class="card" style="border-color:rgba(18,158,140,.22)">
+        <div style="font-size:1.5rem;margin-bottom:.65rem">🎯</div>
+        <div style="font-size:.9rem;font-weight:700;margin-bottom:.4rem">Sugestão, não substituição</div>
+        <div style="font-size:.8rem;color:var(--muted);line-height:1.6">A Mêntore prioriza IA que sugere soluções ao atendente humano, em vez de um agente preditivo autônomo — ainda sem maturidade técnica para esse passo.</div>
+      </div>
+
+      <div class="card" style="border-color:rgba(28,200,238,.2)">
+        <div style="font-size:1.5rem;margin-bottom:.65rem">🧩</div>
+        <div style="font-size:.9rem;font-weight:700;margin-bottom:.4rem">Sistemas legados travam a automação</div>
+        <div style="font-size:.8rem;color:var(--muted);line-height:1.6">Dois sistemas transacionais — um interno, outro de parceiro de folha de pagamento, tipo "caixa preta" — impedem hoje a IA atuar fora do horário comercial.</div>
+      </div>
+
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box red"><div class="stat-val sv-red">~100</div><div class="stat-lbl">Atendentes na operação</div></div>
+    </div>
+
+    <div class="card2" style="border-color:rgba(28,200,238,.15)">
+      <div class="eyebrow blue" style="margin-bottom:.6rem">Onde a Blip entra primeiro</div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.7">A proposta não é começar pelo mais ambicioso. É começar pelo que já é maduro — o atendimento via WhatsApp — e somar três frentes: <strong style="color:var(--text)">Copilot para o atendente</strong> (sugestão de respostas com base na base de conhecimento), <strong style="color:var(--text)">novos casos de uso comerciais</strong> (crédito, cartão, recuperação) e <strong style="color:var(--text)">segurança transacional com biometria</strong>, sem depender da integração com os sistemas legados mais sensíveis.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     BENCHMARK
+══════════════════════════════════════ -->
+<section id="benchmark" style="padding:6rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,#0A0F18 100%)">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="eyebrow">Mercado financeiro</div>
+    <h2 class="section-title" style="max-width:760px">Benchmark: como bancos, fintechs e recuperadoras de crédito usam o canal hoje.</h2>
+    <p class="section-desc">Estudo comparativo entre 8 players do segmento financeiro — bancos digitais e tradicionais, fintechs e recuperadoras de crédito — nos pontos de entrada do atendimento, nos casos de uso já em produção e nas oportunidades de inovação ainda pouco exploradas.</p>
+
+    <!-- Entry points -->
+    <div style="margin-bottom:3rem">
+      <div class="eyebrow blue" style="margin-bottom:.9rem">Pontos de entrada</div>
+      <div class="bench-wrap">
+        <table class="bench-table">
+          <tr><th>Canal</th><th>Recup. Crédito 1</th><th>Banco Digital 1</th><th>Banco Digital 2</th><th>Banco Trad. 1</th><th>Banco Trad. 2</th><th>Fintech 1</th><th>Fintech 2</th><th>Recup. Crédito 2</th></tr>
+          <tr><td>Site</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Instagram/WhatsApp</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Facebook</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-no">✕</td></tr>
+          <tr><td>Google</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td></tr>
+          <tr><td>TikTok</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-q">?</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td></tr>
+        </table>
+      </div>
+      <div class="bench-legend"><span><span class="bench-yes">✓</span> Possui a funcionalidade</span><span><span class="bench-q">?</span> Inconclusivo</span></div>
+    </div>
+
+    <!-- Casos de uso -->
+    <div style="margin-bottom:3rem">
+      <div class="eyebrow blue" style="margin-bottom:.9rem">Casos de uso já em produção</div>
+      <div class="bench-wrap">
+        <table class="bench-table">
+          <tr><th>Funcionalidade</th><th>Recup. Crédito 1</th><th>Banco Digital 1</th><th>Banco Digital 2</th><th>Banco Trad. 1</th><th>Banco Trad. 2</th><th>Fintech 1</th><th>Fintech 2</th><th>Recup. Crédito 2</th></tr>
+          <tr><td>Consigo contratar um serviço?</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Renegociação / variação de ofertas</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Emissão 2ª via de boleto</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-q">?</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Contraproposta</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-q">?</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td></tr>
+          <tr><td>Boleto único</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-q">?</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Clusterização prévia de leads</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Transbordo humano</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Régua de comunicação (NAs)</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td></tr>
+        </table>
+      </div>
+      <div class="bench-legend"><span><span class="bench-yes">✓</span> Possui a funcionalidade</span><span><span class="bench-q">?</span> Inconclusivo</span></div>
+    </div>
+
+    <!-- Oportunidades -->
+    <div>
+      <div class="eyebrow blue" style="margin-bottom:.9rem">Oportunidades de inovação</div>
+      <div class="bench-wrap">
+        <table class="bench-table">
+          <tr><th>Funcionalidade</th><th>Recup. Crédito 1</th><th>Banco Digital 1</th><th>Banco Digital 2</th><th>Banco Trad. 1</th><th>Banco Trad. 2</th><th>Fintech 1</th><th>Fintech 2</th><th>Recup. Crédito 2</th></tr>
+          <tr><td>WhatsApp Flows</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td style="color:var(--blip);font-weight:700">🚀</td></tr>
+          <tr><td>IA · AI Agent e Copilot</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td></tr>
+          <tr><td>Autenticação</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-yes">✓</td></tr>
+          <tr><td>WhatsApp Voice (Calling)</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td></tr>
+          <tr><td>Transcrição de áudio</td><td class="bench-no">✕</td><td style="color:var(--blip);font-weight:700">🚀</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td style="color:var(--blip);font-weight:700">🚀</td><td class="bench-no">✕</td></tr>
+          <tr><td>Integração URA / Call Deflection</td><td class="bench-yes">✓</td><td class="bench-yes">✓</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-q">?</td><td class="bench-no">✕</td><td class="bench-no">✕</td><td class="bench-no">✕</td></tr>
+        </table>
+      </div>
+      <div class="bench-legend"><span><span class="bench-yes">✓</span> Possui a funcionalidade</span><span style="color:var(--blip)">🚀 Previsto para implementação</span><span><span class="bench-q">?</span> Inconclusivo</span></div>
+    </div>
+
+    <div class="card2" style="margin-top:2.5rem;border-color:rgba(18,158,140,.18)">
+      <div class="eyebrow" style="margin-bottom:.5rem">O que isso significa para a Mêntore</div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.7">IA Agent/Copilot já é unânime entre os players analisados — ninguém fica de fora. Transbordo humano e régua de comunicação também são padrão de mercado, o que confirma que a base da Mêntore está alinhada. As maiores oportunidades em aberto estão em <strong style="color:var(--text)">WhatsApp Flows</strong>, <strong style="color:var(--text)">autenticação</strong> e <strong style="color:var(--text)">transcrição de áudio</strong> — exatamente onde a Blip pode ajudar a sair na frente.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     COMPARATIVO: DETERMINÍSTICO VS IA
+══════════════════════════════════════ -->
+<section id="comparativo" style="padding:6rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,#0A0F18 100%);position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;pointer-events:none">
+    <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(28,200,238,.06) 0%,transparent 70%);top:-200px;right:-100px"></div>
+    <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(18,158,140,.06) 0%,transparent 70%);bottom:-100px;left:-100px"></div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;position:relative">
+
+    <div style="text-align:center;margin-bottom:3.5rem">
+      <div class="eyebrow" style="display:block">Porque está na hora de evoluir</div>
+      <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.15;margin-bottom:1rem">
+        Fluxo determinístico <span style="color:var(--muted);font-weight:400">vs.</span><br>
+        <span style="background:linear-gradient(135deg,#1CC8EE,#00C26F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Atendimento com IA</span>
+      </h2>
+      <p style="color:var(--muted);font-size:1rem;max-width:560px;margin:0 auto;line-height:1.7">
+        O cliente da Mêntore quer ser entendido, não navegar por menus. Veja o que separa o modelo atual de uma experiência apoiada por IA.
+      </p>
+    </div>
+
+    <!-- VS table -->
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin-bottom:3rem">
+
+      <!-- LEFT: determinístico -->
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px 0 0 20px;padding:2rem 1.75rem">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.75rem">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">🌳</div>
+          <div>
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px">Modelo atual</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text)">Fluxo Determinístico</div>
+          </div>
+        </div>
+        <div class="comp-rows" id="comp-left"></div>
+      </div>
+
+      <!-- CENTER divider -->
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 1.5rem;gap:12px">
+        <div style="width:1px;flex:1;background:linear-gradient(180deg,transparent,rgba(28,200,238,.3),transparent)"></div>
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--blip);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#04222b;flex-shrink:0">VS</div>
+        <div style="width:1px;flex:1;background:linear-gradient(180deg,transparent,rgba(28,200,238,.3),transparent)"></div>
+      </div>
+
+      <!-- RIGHT: IA -->
+      <div style="background:linear-gradient(135deg,rgba(28,200,238,.07),rgba(0,194,111,.05));border:1px solid rgba(28,200,238,.2);border-radius:0 20px 20px 0;padding:2rem 1.75rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blip),var(--green));border-radius:0 20px 0 0"></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.75rem">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(28,200,238,.15);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">🧠</div>
+          <div>
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--blip);margin-bottom:2px">Proposta Mêntore × Blip</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text)">Atendimento com IA</div>
+          </div>
+        </div>
+        <div class="comp-rows" id="comp-right"></div>
+      </div>
+    </div>
+
+    <!-- Metric strip -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem">
+      <div class="metric-card">
+        <div class="metric-icon">⏱️</div>
+        <div class="metric-val">↓ Tempo</div>
+        <div class="metric-label">de resolução por atendimento</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🔁</div>
+        <div class="metric-val">↓ Abandono</div>
+        <div class="metric-label">no fluxo de atendimento</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🎯</div>
+        <div class="metric-val">↑ Conversão</div>
+        <div class="metric-label">em crédito, cartão e recuperação</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">👤</div>
+        <div class="metric-val">↓ Transbordos</div>
+        <div class="metric-label">desnecessários para humano</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.comp-row{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.83rem;line-height:1.5}
+.comp-row:last-child{border-bottom:none}
+.comp-icon{font-size:.9rem;padding-top:1px}
+.comp-text-bad{color:var(--muted)}
+.comp-text-good{color:var(--text)}
+.comp-text-good strong{color:var(--blip)}
+.metric-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:1.25rem 1rem;text-align:center;transition:border-color .2s,transform .2s}
+.metric-card:hover{border-color:rgba(28,200,238,.3);transform:translateY(-2px)}
+.metric-icon{font-size:1.5rem;margin-bottom:6px}
+.metric-val{font-family:'Space Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--blip);line-height:1;margin-bottom:4px}
+.metric-label{font-size:.72rem;color:var(--muted);line-height:1.4}
+@media(max-width:700px){
+  #comparativo > div > div:nth-child(3){grid-template-columns:1fr !important}
+  #comparativo > div > div:nth-child(3) > div:nth-child(2){display:none !important}
+  #comparativo > div > div:nth-child(3) > div:first-child{border-radius:20px 20px 0 0 !important}
+  #comparativo > div > div:nth-child(3) > div:last-child{border-radius:0 0 20px 20px !important;border-top:none}
+}
+</style>
+
+<script>
+(function(){
+  const leftRows = [
+    ["❌","Menus fixos de botões — o cliente precisa adivinhar qual opção cobre seu problema"],
+    ["❌","Se a intenção não se encaixa numa opção, o fluxo trava ou cai direto em transbordo"],
+    ["❌","Nenhum apoio de IA ao atendente — cada resposta depende de busca manual em manuais"],
+    ["❌","Sem sugestão de produto: crédito, cartão e recuperação dependem de o cliente perguntar"],
+    ["❌","Atendimento restrito a horário comercial, mesmo para dúvidas simples e recorrentes"],
+    ["❌","Cada novo cenário exige reescrever fluxos e árvores de decisão manualmente"],
+  ];
+  const rightRows = [
+    ["✅","<strong>NLU</strong> entende a intenção em linguagem natural, sem menus engessados"],
+    ["✅","<strong>Copilot</strong> sugere a resposta certa ao atendente, com base na base de conhecimento"],
+    ["✅","<strong>Casos de uso comerciais</strong> — crédito, cartão e recuperação oferecidos no momento certo"],
+    ["✅","<strong>Atendimento 24/7</strong> para dúvidas recorrentes, liberando o atendente para o que importa"],
+    ["✅","<strong>Pode evoluir para autonomia</strong> com pouca integração — começando pelo apoio ao atendente"],
+    ["✅","<strong>Base de conhecimento viva</strong>, atualizada continuamente sem reescrever fluxos inteiros"],
+  ];
+
+  function buildRows(containerId, rows, isGood) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = rows.map(([icon, text]) =>
+      `<div class="comp-row">
+        <span class="comp-icon">${icon}</span>
+        <span class="${isGood ? 'comp-text-good' : 'comp-text-bad'}">${text}</span>
+      </div>`
+    ).join('');
+  }
+
+  buildRows('comp-left', leftRows, false);
+  buildRows('comp-right', rightRows, true);
+})();
+</script>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     RECUPERAÇÃO DE CRÉDITO
+══════════════════════════════════════ -->
+<section id="recuperacao" style="padding:6rem 2rem">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="eyebrow">Caso de uso</div>
+    <h2 class="section-title" style="max-width:700px">Recuperação de crédito: negociação ativa antes de virar inadimplência.</h2>
+    <p class="section-desc">Régua de comunicação dispara no momento certo, com proposta de negociação personalizada e boleto gerado na própria conversa — reduzindo o volume que precisa chegar ao atendente humano.</p>
+
+    <div class="split">
+      <div class="phone-col">
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="nc"></div><div class="ns"></div></div>
+            <div class="wa">
+              <div class="wa-hdr">
+                <div class="wa-av"></div>
+                <div class="wa-ci"><div class="wa-cn">Mêntore</div><div class="wa-cs">✓ Conta verificada</div></div>
+                <div class="wa-ha">📞 ⋮</div>
+              </div>
+              <div class="wa-body" id="wa-rec">
+                <div class="date-chip">Hoje</div>
+
+                <div class="msg-step on" id="rs1">
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Olá, <b>Camila!</b> Notamos que a parcela de <b>R$ 320,00</b> está pendente desde o dia 12.<br><br>
+                    Quer ver opções para regularizar agora, com condições facilitadas?
+                    <div class="msg-time">09:02</div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="rs2">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Quero sim, manda as opções <span class="msg-t out">09:03</span></div></div>
+                  <div class="wa-block">
+                    <div class="msg msg-in no-br-btns">
+                      <div class="bot-label">🤖 Mêntore</div>
+                      Encontrei <b>2 condições</b> para você:<br><br>
+                      💳 <b>Opção A</b> — Pagamento único com 15% de desconto<br>
+                      📅 <b>Opção B</b> — Parcelamento em 3x sem juros
+                      <div class="msg-time">09:03</div>
+                    </div>
+                    <div class="wa-btns-wrap">
+                      <button class="wa-btn" onclick="show('rec',3)">💳 Opção A — desconto</button>
+                      <button class="wa-btn" onclick="show('rec',3)">📅 Opção B — 3x sem juros</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="rs3">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Opção A — desconto <span class="msg-t out">09:04</span></div></div>
+                  <div style="background:#fff;border-radius:0 8px 8px 8px;padding:8px 10px;align-self:flex-start;max-width:82%;box-shadow:0 1px 2px rgba(0,0,0,.12);display:flex;align-items:center;gap:8px;margin-top:2px">
+                    <div style="width:26px;height:32px;background:#129E8C;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0">PDF</div>
+                    <div>
+                      <div style="font-size:10px;font-weight:700;color:#111;line-height:1.3">Boleto_Negociacao_Mentore.pdf</div>
+                      <div style="font-size:8px;color:#888;margin-top:1px">Vencimento em 3 dias</div>
+                    </div>
+                  </div>
+                  <div class="msg msg-in" style="margin-top:3px">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Boleto gerado com <b>15% de desconto</b> ✅<br>Pode pagar por aqui mesmo ou copiar o código de barras.
+                    <div class="msg-time">09:04</div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="rs4">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">[Comprovante enviado 📎] <span class="msg-t out">09:11</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    🎉 Pagamento confirmado! Sua situação está <b>regularizada</b>.<br><br>
+                    Obrigado por resolver direto com a Mêntore. 💚
+                    <div class="msg-time">09:12</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="wa-input-bar"><div class="wa-inp" id="inp-rec">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('rec')">➤</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="ctrl-row">
+          <button class="ctrl-btn active" id="b-rec-1" onclick="go('rec',1)">Aviso</button>
+          <button class="ctrl-btn" id="b-rec-2" onclick="go('rec',2)">Ofertas</button>
+          <button class="ctrl-btn" id="b-rec-3" onclick="go('rec',3)">Boleto</button>
+          <button class="ctrl-btn" id="b-rec-4" onclick="go('rec',4)">Confirmação</button>
+          <button class="rst-btn" onclick="rst('rec',4)">↺</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:1.5rem">
+          <div class="eyebrow" style="margin-bottom:.8rem">Por que isso importa para a Mêntore</div>
+          <div class="flow-steps">
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Régua proativa:</strong> dispara antes do vencimento, reduzindo volume de inadimplência</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Negociação automatizada:</strong> oferece condições pré-aprovadas sem precisar de atendente</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Boleto único na conversa:</strong> elimina o atrito de buscar o pagamento em outro canal</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Transbordo humano:</strong> casos sensíveis ou sem resposta seguem para o atendente, com contexto completo</div></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tr">Régua de Comunicação</span>
+          <span class="tag tg">Boleto na Conversa</span>
+          <span class="tag tb">Renegociação Automática</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     OFERTA DE CARTÃO
+══════════════════════════════════════ -->
+<section id="cartao" style="padding:6rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,#0A0F18 100%)">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="eyebrow">Caso de uso</div>
+    <h2 class="section-title" style="max-width:700px">Oferta de cartão: do convite à ativação, sem sair do WhatsApp.</h2>
+    <p class="section-desc">Cliente elegível recebe a oferta, escolhe a bandeira e o limite, confirma o endereço de entrega e acompanha o status — tudo dentro da mesma conversa que já usa para falar com a Mêntore.</p>
+
+    <div class="split rev">
+      <div class="phone-col">
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="nc"></div><div class="ns"></div></div>
+            <div class="wa">
+              <div class="wa-hdr">
+                <div class="wa-av"></div>
+                <div class="wa-ci"><div class="wa-cn">Mêntore</div><div class="wa-cs">✓ Conta verificada</div></div>
+                <div class="wa-ha">📞 ⋮</div>
+              </div>
+              <div class="wa-body" id="wa-cart">
+                <div class="date-chip">Hoje</div>
+
+                <div class="msg-step on" id="carts1">
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Oi, <b>Felipe!</b> 🎉 Você foi <b>pré-aprovado</b> para o Cartão Mêntore, sem anuidade no 1º ano.
+                    <div class="msg-time">14:02</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('cart',2)">💳 Quero solicitar</button>
+                    <button class="wa-btn" onclick="show('cart',2)">❓ Ver condições</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="carts2">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Quero solicitar <span class="msg-t out">14:03</span></div></div>
+                  <div class="wa-block">
+                    <div class="msg msg-in no-br-btns">
+                      <div class="bot-label">🤖 Mêntore</div>
+                      Qual limite inicial você prefere?<br><br>
+                      💰 <b>R$ 2.500</b> — aprovação imediata<br>
+                      💰 <b>R$ 4.000</b> — sujeito a análise rápida
+                      <div class="msg-time">14:03</div>
+                    </div>
+                    <div class="wa-btns-wrap">
+                      <button class="wa-btn" onclick="show('cart',3)">💰 R$ 2.500</button>
+                      <button class="wa-btn" onclick="show('cart',3)">💰 R$ 4.000</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="carts3">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">R$ 2.500 <span class="msg-t out">14:04</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Confirmado! Vamos enviar para o endereço cadastrado:<br><b>Rua das Acácias, 120 — São Paulo</b><br><br>
+                    Está certo?
+                    <div class="msg-time">14:04</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('cart',4)">✅ Confirmar endereço</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="carts4">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">✅ Confirmar endereço <span class="msg-t out">14:05</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    🎉 <b>Pedido concluído!</b> Seu cartão chega em até 7 dias úteis.<br><br>
+                    Você pode acompanhar o rastreio direto aqui no WhatsApp. 📦
+                    <div class="msg-time">14:05</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="wa-input-bar"><div class="wa-inp" id="inp-cart">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('cart')">➤</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="ctrl-row">
+          <button class="ctrl-btn active" id="b-cart-1" onclick="go('cart',1)">Oferta</button>
+          <button class="ctrl-btn" id="b-cart-2" onclick="go('cart',2)">Limite</button>
+          <button class="ctrl-btn" id="b-cart-3" onclick="go('cart',3)">Endereço</button>
+          <button class="ctrl-btn" id="b-cart-4" onclick="go('cart',4)">Confirmação</button>
+          <button class="rst-btn" onclick="rst('cart',4)">↺</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:1.5rem">
+          <div class="eyebrow" style="margin-bottom:.8rem">Por que isso importa para a Mêntore</div>
+          <div class="flow-steps">
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Oferta direcionada:</strong> elegibilidade calculada previamente, sem incomodar quem não se qualifica</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Escolha guiada:</strong> bandeira e limite apresentados de forma simples, com poucos toques</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Confirmação de dados:</strong> endereço e contato validados antes do envio físico</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Acompanhamento pós-venda:</strong> status de entrega e ativação sem precisar ligar para a central</div></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tr">Oferta Pré-Aprovada</span>
+          <span class="tag tb">Escolha de Limite</span>
+          <span class="tag tg">Rastreio na Conversa</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     TRANSACIONAL COM BIOMETRIA
+══════════════════════════════════════ -->
+<section id="biometria" style="padding:6rem 2rem">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="eyebrow">Caso de uso</div>
+    <h2 class="section-title" style="max-width:700px">Transacional com biometria: segurança em cada movimentação.</h2>
+    <p class="section-desc">Consultas de saldo seguem livres. Para transferências e valores mais altos, a IA exige validação biométrica antes de confirmar — sem precisar integrar com o sistema "caixa preta" do parceiro de folha de pagamento.</p>
+
+    <div class="split">
+      <div class="phone-col">
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="nc"></div><div class="ns"></div></div>
+            <div class="wa">
+              <div class="wa-hdr">
+                <div class="wa-av"></div>
+                <div class="wa-ci"><div class="wa-cn">Mêntore</div><div class="wa-cs">✓ Conta verificada</div></div>
+                <div class="wa-ha">📞 ⋮</div>
+              </div>
+              <div class="wa-body" id="wa-bio">
+                <div class="date-chip">Hoje</div>
+
+                <div class="msg-step on" id="bios1">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Quero transferir R$ 1.200 para João <span class="msg-t out">16:40</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Para transferências acima de R$ 500, preciso confirmar que é <b>você mesmo</b> 🔐
+                    <div class="msg-time">16:40</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('bio',2)">📷 Validar com biometria facial</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="bios2">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">[Selfie enviada 📸] <span class="msg-t out">16:41</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Analisando... ⏳
+                    <div class="msg-time">16:41</div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="bios3">
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    ✅ <b>Identidade confirmada!</b><br><br>
+                    Transferência de <b>R$ 1.200,00</b> para João Pereira — confirma o envio?
+                    <div class="msg-time">16:41</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('bio',4)">✅ Confirmar transferência</button>
+                    <button class="wa-btn" onclick="show('bio',4)">✕ Cancelar</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="bios4">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">✅ Confirmar transferência <span class="msg-t out">16:42</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    🎉 Transferência concluída com sucesso!<br><br>
+                    Comprovante disponível aqui mesmo, sempre que precisar.
+                    <div class="msg-time">16:42</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="wa-input-bar"><div class="wa-inp" id="inp-bio">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('bio')">➤</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="ctrl-row">
+          <button class="ctrl-btn active" id="b-bio-1" onclick="go('bio',1)">Pedido</button>
+          <button class="ctrl-btn" id="b-bio-2" onclick="go('bio',2)">Biometria</button>
+          <button class="ctrl-btn" id="b-bio-3" onclick="go('bio',3)">Validação</button>
+          <button class="ctrl-btn" id="b-bio-4" onclick="go('bio',4)">Confirmação</button>
+          <button class="rst-btn" onclick="rst('bio',4)">↺</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:1.5rem">
+          <div class="eyebrow" style="margin-bottom:.8rem">Por que isso importa para a Mêntore</div>
+          <div class="flow-steps">
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Camada de segurança extra:</strong> biometria facial exigida acima de um valor configurável</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Sem fricção desnecessária:</strong> consultas simples seguem livres, só transações sensíveis pedem validação</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Independente dos legados:</strong> a validação roda na camada conversacional, sem depender da integração com o sistema do parceiro de folha</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Comprovante automático:</strong> reduz volume de "preciso do comprovante" no atendimento humano</div></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tg">Biometria Facial</span>
+          <span class="tag tr">Limite Configurável</span>
+          <span class="tag tb">Comprovante Automático</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     ATENDIMENTO DE DÚVIDAS COM IA
+══════════════════════════════════════ -->
+<section id="duvidas" style="padding:6rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,#0A0F18 100%)">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="eyebrow">Caso de uso</div>
+    <h2 class="section-title" style="max-width:700px">Atendimento de dúvidas com IA: respostas certas, sem fila.</h2>
+    <p class="section-desc">A maior parte do volume de contato é dúvida recorrente — taxas, prazos, condições, como usar um produto. A IA entende a pergunta em linguagem natural, busca na base de conhecimento da Mêntore e responde na hora, reservando o atendente humano para o que realmente precisa de julgamento.</p>
+
+    <div class="split rev">
+      <div class="phone-col">
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="nc"></div><div class="ns"></div></div>
+            <div class="wa">
+              <div class="wa-hdr">
+                <div class="wa-av"></div>
+                <div class="wa-ci"><div class="wa-cn">Mêntore</div><div class="wa-cs">✓ Conta verificada</div></div>
+                <div class="wa-ha">📞 ⋮</div>
+              </div>
+              <div class="wa-body" id="wa-duv">
+                <div class="date-chip">Hoje</div>
+
+                <div class="msg-step on" id="duvs1">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Qual a taxa de juros do crédito pessoal de vocês? <span class="msg-t out">13:10</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Boa pergunta! 😊<br><br>
+                    A taxa do <b>Crédito Pessoal Mêntore</b> varia de <b>1,61% a 2,40% a.m.</b>, conforme seu perfil e prazo escolhido.
+                    <div class="msg-time">13:10</div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="duvs2">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">E se eu atrasar uma parcela, o que acontece? <span class="msg-t out">13:11</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Entendo a preocupação! Em caso de atraso:<br><br>
+                    📌 Multa de 2% sobre o valor da parcela<br>
+                    📌 Juros de mora de 1% ao mês<br>
+                    📌 Você pode renegociar comigo mesmo, sem precisar de atendente
+                    <div class="msg-time">13:11</div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="duvs3">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Tem como eu mesmo simular um valor antes de decidir? <span class="msg-t out">13:12</span></div></div>
+                  <div class="msg msg-in no-br-btns">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Claro! Me diz o valor que você quer simular e eu já te mostro as condições:
+                    <div class="msg-time">13:12</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('duv',4)">💰 Simular R$ 3.000</button>
+                    <button class="wa-btn" onclick="show('duv',4)">💰 Simular R$ 5.000</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="duvs4">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">💰 Simular R$ 3.000 <span class="msg-t out">13:13</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Para <b>R$ 3.000</b> em 12x: parcelas de <b>R$ 287,40</b> (taxa 1,89% a.m.).<br><br>
+                    Quer que eu já te encaminhe para a contratação?
+                    <div class="msg-time">13:13</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="wa-input-bar"><div class="wa-inp" id="inp-duv">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('duv')">➤</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="ctrl-row">
+          <button class="ctrl-btn active" id="b-duv-1" onclick="go('duv',1)">Taxas</button>
+          <button class="ctrl-btn" id="b-duv-2" onclick="go('duv',2)">Atraso</button>
+          <button class="ctrl-btn" id="b-duv-3" onclick="go('duv',3)">Simulação</button>
+          <button class="ctrl-btn" id="b-duv-4" onclick="go('duv',4)">Resultado</button>
+          <button class="rst-btn" onclick="rst('duv',4)">↺</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:1.5rem">
+          <div class="eyebrow" style="margin-bottom:.8rem">Por que isso importa para a Mêntore</div>
+          <div class="flow-steps">
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Entendimento por NLU:</strong> a IA interpreta a pergunta em linguagem natural, sem precisar de menus de opções</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Resposta da base de conhecimento:</strong> mesma lógica do Copilot do atendente, aplicada direto ao cliente</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Simulações no próprio chat:</strong> o cliente testa cenários sem precisar abrir o app ou ligar</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Transbordo qualificado:</strong> só chega ao atendente humano quem realmente precisa de uma decisão</div></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tr">NLU</span>
+          <span class="tag tb">Base de Conhecimento</span>
+          <span class="tag tg">Simulação no Chat</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     COPILOT PARA ATENDENTES
+══════════════════════════════════════ -->
+<section id="copilot" style="padding:6rem 2rem">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="eyebrow blue">O ponto de partida combinado</div>
+    <h2 class="section-title" style="max-width:740px">Copilot: a IA sugere, o atendente decide.</h2>
+    <p class="section-desc">Sem agente preditivo autônomo agora — exatamente como a Mêntore definiu. A IA faz um scan da base de conhecimento a partir do que o cliente está pedindo e entrega ao atendente humano uma sugestão de resposta pronta para revisar e enviar, dentro do próprio Blip Desk.</p>
+
+    <div class="split">
+      <div>
+        <div class="card" style="margin-bottom:1.5rem">
+          <div class="eyebrow" style="margin-bottom:.8rem">Como funciona</div>
+          <div class="flow-steps">
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Cliente escreve no WhatsApp:</strong> dúvida, reclamação ou pedido chega para o atendente em tempo real</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>IA faz o scan:</strong> busca na base de conhecimento da Mêntore o que mais se aproxima do problema relatado</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Sugestão aparece para o atendente:</strong> resposta pronta, com a fonte indicada, sem enviar nada automaticamente</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Atendente revisa e decide:</strong> aceita, edita ou descarta — o controle final continua humano</div></div>
+            <div class="fs-item"><div class="fs-num">5</div><div class="fs-body"><strong>Aprendizado contínuo:</strong> cada interação aceita ou corrigida ajuda a calibrar as próximas sugestões</div></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tb">Copilot, não autopiloto</span>
+          <span class="tag tg">Base de conhecimento Mêntore</span>
+          <span class="tag tr">Sem integração com sistemas legados</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="insight-grid">
+          <div class="ig-card">
+            <div class="ig-icon">⚡</div>
+            <div class="ig-title">Reduz tempo de resposta</div>
+            <div class="ig-text">O atendente não precisa procurar manualmente em manuais ou scripts — a sugestão já chega pronta.</div>
+          </div>
+          <div class="ig-card">
+            <div class="ig-icon">🎓</div>
+            <div class="ig-title">Constrói maturidade</div>
+            <div class="ig-text">É o passo natural antes de qualquer automação mais autônoma — a operação aprende a confiar na IA com supervisão humana.</div>
+          </div>
+          <div class="ig-card">
+            <div class="ig-icon">🔒</div>
+            <div class="ig-title">Não depende dos legados</div>
+            <div class="ig-text">Funciona sobre a base de conhecimento, sem precisar integrar com os sistemas transacionais internos ou do parceiro de folha.</div>
+          </div>
+          <div class="ig-card">
+            <div class="ig-icon">📊</div>
+            <div class="ig-title">Visibilidade de gestão</div>
+            <div class="ig-text">Permite medir quais sugestões são aceitas, editadas ou ignoradas — material concreto para evoluir a base de conhecimento.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     BLIP CRED
+══════════════════════════════════════ -->
+<section id="blipcred" style="padding:6rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,#0A0F18 100%)">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(18,158,140,.12);border:1px solid rgba(18,158,140,.3);border-radius:100px;padding:5px 16px;font-size:.68rem;font-weight:700;color:#5FE0CB;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.2rem">★ Pensado para a operação da Mêntore</div>
+    <div class="eyebrow blue">Produto</div>
+    <h2 class="section-title" style="max-width:700px">Blip Cred: venda de crédito<br>100% conversacional no WhatsApp.</h2>
+
+    <div class="cred-box" style="margin-bottom:3rem">
+      <p class="cred-sub">
+        Uma experiência ponta a ponta — aquisição, contratação, formalização e pós-venda — tudo dentro do WhatsApp. A IA atua em cada etapa da jornada: interpretando dados, personalizando ofertas e validando documentos, com fluidez e precisão.
+      </p>
+
+      <!-- Jornada timeline -->
+      <div style="margin-bottom:2rem">
+        <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blip);margin-bottom:1rem">Jornada conversacional</div>
+        <div style="display:flex;gap:0;overflow-x:auto;padding-bottom:.5rem">
+          <div style="display:flex;align-items:stretch;min-width:max-content;gap:0;width:100%">
+            <div style="flex:1;min-width:110px;background:rgba(28,200,238,.07);border:1px solid rgba(28,200,238,.18);border-right:none;border-radius:12px 0 0 12px;padding:.9rem .85rem">
+              <div style="font-size:.65rem;font-weight:700;color:var(--blip);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem">01</div>
+              <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.25rem">Geração de demanda</div>
+              <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Campanhas, CRM e régua de comunicação</div>
+            </div>
+            <div style="flex:1;min-width:110px;background:rgba(28,200,238,.09);border:1px solid rgba(28,200,238,.18);border-right:none;padding:.9rem .85rem">
+              <div style="font-size:.65rem;font-weight:700;color:var(--blip);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem">02</div>
+              <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.25rem">Elegibilidade e simulação</div>
+              <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Consulta de margem, validação e simulação de ofertas</div>
+            </div>
+            <div style="flex:1;min-width:110px;background:rgba(28,200,238,.12);border:1px solid rgba(28,200,238,.22);border-right:none;padding:.9rem .85rem;position:relative">
+              <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:var(--blip);border-radius:100px;padding:2px 8px;font-size:.6rem;font-weight:700;color:#000;white-space:nowrap">IA Core</div>
+              <div style="font-size:.65rem;font-weight:700;color:var(--blip);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem">03</div>
+              <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.25rem">Oferta e negociação</div>
+              <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Apresentação de propostas, ajustes e argumentação via IA</div>
+            </div>
+            <div style="flex:1;min-width:110px;background:rgba(28,200,238,.09);border:1px solid rgba(28,200,238,.18);border-right:none;padding:.9rem .85rem">
+              <div style="font-size:.65rem;font-weight:700;color:var(--blip);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem">04</div>
+              <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.25rem">Cadastro</div>
+              <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Coleta automática de dados pessoais, bancários e documentos</div>
+            </div>
+            <div style="flex:1;min-width:110px;background:rgba(28,200,238,.09);border:1px solid rgba(28,200,238,.18);border-right:none;padding:.9rem .85rem">
+              <div style="font-size:.65rem;font-weight:700;color:var(--blip);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem">05</div>
+              <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.25rem">Assinatura</div>
+              <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Formalização digital com biometria facial, voz ou vídeo</div>
+            </div>
+            <div style="flex:1;min-width:110px;background:rgba(28,200,238,.07);border:1px solid rgba(28,200,238,.18);border-radius:0 12px 12px 0;padding:.9rem .85rem">
+              <div style="font-size:.65rem;font-weight:700;color:var(--blip);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem">06</div>
+              <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.25rem">Pós-venda</div>
+              <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Acompanhamento, retenção e reengajamento automatizados</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pilares -->
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blip);margin-bottom:.75rem">Pilares do produto</div>
+      <div class="cred-steps">
+        <div class="cred-step">
+          <div style="font-size:1.2rem;margin-bottom:.5rem">🤖</div>
+          <div class="cred-step-title">Produto AI-First</div>
+          <div class="cred-step-desc">IA generativa no core — coleta dados em texto, voz e imagem, faz OCR de documentos e personaliza cada oferta em tempo real.</div>
+        </div>
+        <div class="cred-step">
+          <div style="font-size:1.2rem;margin-bottom:.5rem">💬</div>
+          <div class="cred-step-title">Venda humanizada</div>
+          <div class="cred-step-desc">A IA argumenta, tira dúvidas e ajusta condições durante a negociação — sem perder o tom humano que converte.</div>
+        </div>
+        <div class="cred-step">
+          <div style="font-size:1.2rem;margin-bottom:.5rem">🎯</div>
+          <div class="cred-step-title">Foco em conversão</div>
+          <div class="cred-step-desc">Autocontratação 100% no WhatsApp — do primeiro contato à assinatura digital, sem sair do canal.</div>
+        </div>
+        <div class="cred-step">
+          <div style="font-size:1.2rem;margin-bottom:.5rem">📊</div>
+          <div class="cred-step-title">Métricas em tempo real</div>
+          <div class="cred-step-desc">KPIs, funis e cohorts disponíveis no Portal Blip Cred — visibilidade total sobre cada etapa da jornada.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP BLIP CRED — interactive -->
+    <div style="margin-bottom:3.5rem">
+      <div class="eyebrow blue" style="margin-bottom:.5rem">Jornada real no WhatsApp</div>
+      <p style="color:var(--muted);font-size:.88rem;margin-bottom:2rem">Do opt-in à contratação — 100% dentro da conversa.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 330px;gap:4rem;align-items:start">
+
+        <!-- LEFT: context -->
+        <div>
+          <div class="card" style="margin-bottom:1.5rem">
+            <div class="eyebrow" style="margin-bottom:.8rem">Passo a passo</div>
+            <div class="flow-steps">
+              <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Notificação proativa:</strong> HSM ativo informa que há uma oferta de crédito personalizada disponível</div></div>
+              <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>CPF e elegibilidade:</strong> cliente informa o CPF e o bot consulta e busca as melhores ofertas disponíveis</div></div>
+              <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Seleção da oferta:</strong> bot apresenta as opções e o cliente escolhe a que faz mais sentido</div></div>
+              <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Biometria facial:</strong> validação de identidade antes da formalização — segurança em cada etapa</div></div>
+              <div class="fs-item"><div class="fs-num">5</div><div class="fs-body"><strong>Contratação e PDF:</strong> proposta gerada, assinada digitalmente e enviada como documento na conversa</div></div>
+            </div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tb">AI-First</span>
+            <span class="tag tg">Biometria Facial</span>
+            <span class="tag tb">Assinatura Digital</span>
+            <span class="tag tr">HSM Ativo</span>
+            <span class="tag tb">PDF no Chat</span>
+          </div>
+
+          <!-- Receptive flow callout -->
+          <div style="margin-top:1.5rem;background:rgba(28,200,238,.06);border:1px solid rgba(28,200,238,.15);border-radius:14px;padding:1.1rem 1.25rem;display:flex;gap:10px;align-items:flex-start">
+            <div style="font-size:1.1rem;flex-shrink:0;margin-top:1px">💬</div>
+            <div>
+              <div style="font-size:.78rem;font-weight:700;color:var(--blip);margin-bottom:.3rem">Fluxo receptivo</div>
+              <div style="font-size:.76rem;color:var(--muted);line-height:1.6">Além da oferta ativa, o Blip Cred também funciona de forma receptiva — o cliente entra no WhatsApp quando quiser para simular e solicitar crédito, sem precisar ser impactado primeiro.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: phone mockup -->
+        <div class="phone-col">
+          <div class="phone-wrap">
+            <div class="phone-frame">
+              <div class="phone-notch"><div class="nc"></div><div class="ns"></div></div>
+              <div class="wa">
+                <div class="wa-hdr">
+                  <div class="wa-av"></div>
+                  <div class="wa-ci"><div class="wa-cn">Mêntore</div><div class="wa-cs">✓ Conta verificada</div></div>
+                  <div class="wa-ha">📞 ⋮</div>
+                </div>
+                <div class="wa-body" id="wa-bc">
+                  <div class="date-chip">Hoje</div>
+
+                  <div class="msg-step on" id="bcs1">
+                    <div class="msg msg-in">
+                      <div class="bot-label">🤖 Mêntore</div>
+                      Oi, <b>Rogério!</b> 👋<br><br>
+                      Temos uma <b>oferta de crédito</b> personalizada para você com base no seu perfil.<br><br>
+                      Para buscar as melhores condições, preciso do seu <b>CPF</b>:
+                      <div class="msg-time">10:14</div>
+                    </div>
+                  </div>
+
+                  <div class="msg-step" id="bcs2">
+                    <div class="wa-block wa-block-out"><div class="msg msg-out">012.345.678-90 <span class="msg-t out">10:15</span></div></div>
+                    <div class="msg msg-in">
+                      <div class="bot-label">🤖 Mêntore</div>
+                      Perfeito! Buscando as melhores ofertas para você... ⏳
+                      <div class="msg-time">10:15</div>
+                    </div>
+                  </div>
+
+                  <div class="msg-step" id="bcs3">
+                    <div class="wa-block">
+                      <div class="msg msg-in no-br-btns">
+                        <div class="bot-label">🤖 Mêntore</div>
+                        Encontrei <b>2 ofertas</b> disponíveis:<br><br>
+                        💰 <b>Opção A — Novo crédito</b><br>
+                        Valor: R$ 18.000 · 24x de R$ 890<br>
+                        Taxa: 1,89% a.m.<br><br>
+                        💰 <b>Opção B — Refinanciamento</b><br>
+                        Valor: R$ 6.200 · 24x de R$ 310<br>
+                        Taxa: 1,61% a.m.
+                        <div class="msg-time">10:16</div>
+                      </div>
+                      <div class="wa-btns-wrap">
+                        <button class="wa-btn" onclick="show('bc',4)">💰 Opção A — R$ 18.000</button>
+                        <button class="wa-btn" onclick="show('bc',4)">💰 Opção B — R$ 6.200</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="msg-step" id="bcs4">
+                    <div class="wa-block wa-block-out"><div class="msg msg-out">Opção A — R$ 18.000 <span class="msg-t out">10:17</span></div></div>
+                    <div class="wa-block">
+                      <div class="msg msg-in no-br-btns">
+                        <div class="bot-label">🤖 Mêntore</div>
+                        Ótima escolha! 🔐<br><br>
+                        Para confirmar a contratação, precisamos validar sua identidade com <b>biometria facial</b>.<br><br>
+                        Clique abaixo para abrir a câmera:
+                        <div class="msg-time">10:17</div>
+                      </div>
+                      <div class="wa-btns-wrap">
+                        <button class="wa-btn" onclick="show('bc',5)">📷 Fazer biometria facial</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="msg-step" id="bcs5">
+                    <div class="wa-block wa-block-out"><div class="msg msg-out">[Selfie enviada 📸] <span class="msg-t out">10:18</span></div></div>
+                    <div class="msg msg-in">
+                      <div class="bot-label">🤖 Mêntore</div>
+                      ✅ <b>Identidade validada!</b> Gerando contrato...
+                      <div class="msg-time">10:18</div>
+                    </div>
+                    <div style="background:#fff;border-radius:0 8px 8px 8px;padding:8px 10px;align-self:flex-start;max-width:82%;box-shadow:0 1px 2px rgba(0,0,0,.12);display:flex;align-items:center;gap:8px;margin-top:2px">
+                      <div style="width:26px;height:32px;background:#129E8C;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0">PDF</div>
+                      <div>
+                        <div style="font-size:10px;font-weight:700;color:#111;line-height:1.3">Contrato_Credito_Mentore.pdf</div>
+                        <div style="font-size:8px;color:#888;margin-top:1px">234 KB · Toque para abrir</div>
+                      </div>
+                    </div>
+                    <div class="msg msg-in" style="margin-top:3px">
+                      <div class="bot-label">🤖 Mêntore</div>
+                      🎉 <b>Crédito contratado!</b><br><br>
+                      Em breve o valor estará disponível na sua conta. Acompanhe o status da solicitação diretamente no <b>app Mêntore</b>. 📱
+                      <div class="msg-time">10:19</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="wa-input-bar"><div class="wa-inp" id="inp-bc">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('bc')">➤</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="ctrl-row">
+            <button class="ctrl-btn active" id="b-bc-1" onclick="go('bc',1)">Notificação</button>
+            <button class="ctrl-btn" id="b-bc-2" onclick="go('bc',2)">CPF</button>
+            <button class="ctrl-btn" id="b-bc-3" onclick="go('bc',3)">Ofertas</button>
+            <button class="ctrl-btn" id="b-bc-4" onclick="go('bc',4)">Biometria</button>
+            <button class="ctrl-btn" id="b-bc-5" onclick="go('bc',5)">Contrato</button>
+            <button class="rst-btn" onclick="rst('bc',5)">↺</button>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- end mockup block -->
+
+    <!-- MODELO COMERCIAL -->
+    <div style="background:linear-gradient(135deg,rgba(28,200,238,.06) 0%,rgba(18,158,140,.06) 100%);border:1px solid rgba(28,200,238,.18);border-radius:20px;padding:2.25rem 2.5rem">
+      <div class="eyebrow blue" style="margin-bottom:.6rem">Como chegamos no modelo comercial</div>
+      <h3 style="font-size:1.4rem;font-weight:800;margin-bottom:.9rem;max-width:680px">A gente não vende uma licença. A gente roda, mede e modela junto com o time da Mêntore.</h3>
+      <p style="color:var(--muted);font-size:.88rem;line-height:1.7;max-width:700px;margin-bottom:2rem">A Blip repensa constantemente seus modelos comerciais para ficar aderente à realidade de cada operação — e no segmento financeiro isso já gerou resultados expressivos para quem testou dessa forma. O caminho é simples: roda o teste, mede o que importa, entende o resultado real e só então desenha o modelo comercial que faz sentido para os dois lados.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0">
+        <div style="text-align:center;padding:0 .75rem">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(28,200,238,.12);border:1px solid rgba(28,200,238,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto .75rem">🚀</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Roda o teste</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">Caso de uso definido junto com o time Mêntore, no escopo que faz sentido pra operação</div>
+        </div>
+        <div style="text-align:center;padding:0 .75rem">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(28,200,238,.12);border:1px solid rgba(28,200,238,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto .75rem">📊</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Mede o que importa</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">KPIs e cohorts em tempo real no Portal Blip Cred — sem caixa preta, dado aberto pros dois lados</div>
+        </div>
+        <div style="text-align:center;padding:0 .75rem">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(28,200,238,.12);border:1px solid rgba(28,200,238,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto .75rem">🔍</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Entende o resultado</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">Análise conjunta do que funcionou, do que precisa ajuste e do potencial real de escala</div>
+        </div>
+        <div style="text-align:center;padding:0 .75rem">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(28,200,238,.12);border:1px solid rgba(28,200,238,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto .75rem">🤝</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Modela junto</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">O modelo comercial nasce do resultado medido, desenhado em conjunto com a Mêntore</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     CTA / PRÓXIMOS PASSOS
+══════════════════════════════════════ -->
+<section id="cta" class="cta-section">
+  <div class="eyebrow" style="position:relative">Próxima reunião · 30/06 · 10h</div>
+  <h2 class="cta-title">Vamos seguir construindo<br>juntos com a Mêntore.</h2>
+  <p class="cta-sub">Com a participação remota do Wagner (Fortaleza), trazemos o benchmarking do mercado financeiro, mostramos as capacidades de IA da Blip e apresentamos outras soluções do ecossistema — como pagamento via Pix e Blip Cred — para mapear onde mais a Mêntore pode crescer dentro do canal.</p>
+
+  <div class="cta-steps">
+    <div class="cta-step highlight">
+      <div class="cs-icon">📊</div>
+      <div class="cs-title">Benchmarking</div>
+      <div class="cs-desc">Apresentar o estudo de mercado financeiro e posicionar a Mêntore frente aos pares</div>
+    </div>
+    <div class="cta-step">
+      <div class="cs-icon">🤖</div>
+      <div class="cs-title">IA da Blip</div>
+      <div class="cs-desc">Mostrar o Copilot de sugestão para atendentes e o caminho até maior autonomia</div>
+    </div>
+    <div class="cta-step">
+      <div class="cs-icon">💳</div>
+      <div class="cs-title">Pix e Blip Cred</div>
+      <div class="cs-desc">Explorar geração de cobrança via Pix e venda de crédito 100% conversacional</div>
+    </div>
+    <div class="cta-step">
+      <div class="cs-icon">🛠️</div>
+      <div class="cs-title">Itens em aberto</div>
+      <div class="cs-desc">Acesso do Marcelo ao contrato, alteração de URL (CBRAS) e ajuste de marca sem "Bank"</div>
+    </div>
+  </div>
+
+  <a href="#" class="cta-btn">Confirmar agenda do dia 30 →</a>
+</section>
+
+<footer>
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1rem;font-size:1.05rem">
+    <span style="font-weight:700;color:var(--red)">🏦 Mêntore</span>
+    <span style="color:var(--muted)">+</span>
+    <span style="font-weight:700;color:var(--blip)">💬 Blip</span>
+  </div>
+  <p style="margin-bottom:.4rem">Blip Customer Growth · growth.cs@blip.ai · blip.ai/studio</p>
+  <p style="color:#3A4A5A">Proposta construída a partir da reunião de 23/06 e do benchmark do segmento financeiro</p>
+</footer>
+
+<script>
+const state={};
+const pfx={bc:'bcs',rec:'rs',cart:'carts',bio:'bios',duv:'duvs'};
+const max={bc:5,rec:4,cart:4,bio:4,duv:4};
+
+function sendMsg(f){
+  const cur=state[f]||1;
+  const m=max[f];
+  if(cur<m){ show(f,cur+1); }
+  const inp=document.getElementById('inp-'+f);
+  if(inp){ inp.value=''; }
+}
+function show(f,n){state[f]=Math.max(state[f]||1,n);render(f)}
+function go(f,n){state[f]=n;render(f)}
+function rst(f){state[f]=1;render(f)}
+function render(f){
+  const cur=state[f]||1, p=pfx[f], m=max[f];
+  for(let i=1;i<=m;i++){
+    const el=document.getElementById(p+i);
+    if(el) el.classList.toggle('on',i<=cur);
+    const btn=document.getElementById('b-'+f+'-'+i);
+    if(btn) btn.classList.toggle('active',i===cur);
+  }
+  const wa=document.getElementById('wa-'+f);
+  if(wa) setTimeout(()=>{wa.scrollTop=wa.scrollHeight},80);
+}
+
+// Nav active
+const navTabs=document.querySelectorAll('.nav-tab');
+const sections=document.querySelectorAll('section[id]');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navTabs.forEach(t=>t.classList.remove('active'));
+      const a=document.querySelector(`.nav-tab[href="#${e.target.id}"]`);
+      if(a) a.classList.add('active');
+    }
+  });
+},{threshold:.25});
+sections.forEach(s=>obs.observe(s));
+
+Object.keys(max).forEach(f=>{state[f]=1});
+</script>
+</body>
+</html>
