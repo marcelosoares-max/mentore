@@ -327,10 +327,10 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
     <a href="#comparativo"  class="nav-tab">Determinístico × IA</a>
     <a href="#desk"         class="nav-tab">Além do Bot</a>
     <a href="#recuperacao"  class="nav-tab">Recuperação</a>
-    <a href="#cartao"       class="nav-tab">Oferta de Cartão</a>
-    <a href="#biometria"    class="nav-tab">Biometria</a>
+    <a href="#seguro"       class="nav-tab">Seguro de Vida</a>
+    <a href="#fraude"       class="nav-tab">Prevenção de Fraude</a>
+    <a href="#antecipacao"  class="nav-tab">Antecipação PJ</a>
     <a href="#duvidas"      class="nav-tab">Dúvidas com IA</a>
-    <a href="#copilot"      class="nav-tab">Copilot</a>
     <a href="#blipcred"     class="nav-tab">Blip Cred</a>
     <a href="#cta"          class="nav-tab">Próximos Passos</a>
   </div>
@@ -967,7 +967,6 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
       </div><!-- /dashboard scroll wrapper -->
     </div>
   </div>
-  </div>
 </section>
 
 
@@ -979,10 +978,35 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
 <section id="recuperacao" style="padding:6rem 2rem">
   <div style="max-width:1300px;margin:0 auto">
     <div class="eyebrow">Caso de uso</div>
-    <h2 class="section-title" style="max-width:700px">Recuperação de crédito: negociação ativa antes de virar inadimplência.</h2>
-    <p class="section-desc">Régua de comunicação dispara no momento certo, com proposta de negociação personalizada e boleto gerado na própria conversa — reduzindo o volume que precisa chegar ao atendente humano.</p>
+    <h2 class="section-title" style="max-width:700px">Recuperação de crédito: o agente negocia, o cliente decide, o acordo fecha no WhatsApp.</h2>
+    <p class="section-desc">Não é uma régua de mensagem — é um agente de IA que lê o perfil do cliente, entende o momento dele e negocia em tempo real até encontrar uma condição que caiba no bolso. Tudo sem sair do WhatsApp.</p>
 
-    <div class="split">
+    <!-- highlight strip -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:3rem">
+      <div style="background:rgba(18,158,140,.08);border:1px solid rgba(18,158,140,.2);border-radius:14px;padding:1.1rem 1.25rem;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:1.3rem;flex-shrink:0">🧠</div>
+        <div>
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:.25rem">Negociação por IA</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">O agente consulta a base de dados da Mêntore e propõe condições personalizadas, com margem para ajuste em tempo real</div>
+        </div>
+      </div>
+      <div style="background:rgba(28,200,238,.07);border:1px solid rgba(28,200,238,.18);border-radius:14px;padding:1.1rem 1.25rem;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:1.3rem;flex-shrink:0">🤝</div>
+        <div>
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:.25rem">Acordo dentro do WhatsApp</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">Cliente assina com biometria facial direto na conversa — sem precisar ir a uma agência ou assinar PDF por fora</div>
+        </div>
+      </div>
+      <div style="background:rgba(0,194,111,.07);border:1px solid rgba(0,194,111,.18);border-radius:14px;padding:1.1rem 1.25rem;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:1.3rem;flex-shrink:0">📧</div>
+        <div>
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:.25rem">Acordo enviado por e-mail</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">Ao fechar, o agente confirma o envio do contrato assinado para o e-mail cadastrado — transparência e rastreabilidade total</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="split rev">
       <div class="phone-col">
         <div class="phone-wrap">
           <div class="phone-frame">
@@ -999,52 +1023,78 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
                 <div class="msg-step on" id="rs1">
                   <div class="msg msg-in">
                     <div class="bot-label">🤖 Mêntore</div>
-                    Olá, <b>Camila!</b> Notamos que a parcela de <b>R$ 320,00</b> está pendente desde o dia 12.<br><br>
-                    Quer ver opções para regularizar agora, com condições facilitadas?
-                    <div class="msg-time">09:02</div>
+                    Oi, <b>Camila!</b> 👋 Tudo bem?<br><br>
+                    Percebi que você tem uma pendência de <b>R$ 1.840,00</b> em aberto. Antes de qualquer coisa, quero entender a sua situação pra gente achar a melhor saída juntos. Posso te ajudar?
+                    <div class="msg-time">10:02</div>
                   </div>
                 </div>
 
                 <div class="msg-step" id="rs2">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">Quero sim, manda as opções <span class="msg-t out">09:03</span></div></div>
-                  <div class="wa-block">
-                    <div class="msg msg-in no-br-btns">
-                      <div class="bot-label">🤖 Mêntore</div>
-                      Encontrei <b>2 condições</b> para você:<br><br>
-                      💳 <b>Opção A</b> — Pagamento único com 15% de desconto<br>
-                      📅 <b>Opção B</b> — Parcelamento em 3x sem juros
-                      <div class="msg-time">09:03</div>
-                    </div>
-                    <div class="wa-btns-wrap">
-                      <button class="wa-btn" onclick="show('rec',3)">💳 Opção A — desconto</button>
-                      <button class="wa-btn" onclick="show('rec',3)">📅 Opção B — 3x sem juros</button>
-                    </div>
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Sim, mas tô passando por um momento difícil agora, não consigo pagar tudo de uma vez <span class="msg-t out">10:03</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Entendo, Camila. Obrigado por ser honesta comigo 🙏<br><br>
+                    Sem problema. Vou ver aqui o que consigo liberar pra você. Quanto você conseguiria pagar <b>por mês</b>, de forma confortável?
+                    <div class="msg-time">10:03</div>
                   </div>
                 </div>
 
                 <div class="msg-step" id="rs3">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">Opção A — desconto <span class="msg-t out">09:04</span></div></div>
-                  <div style="background:#fff;border-radius:0 8px 8px 8px;padding:8px 10px;align-self:flex-start;max-width:82%;box-shadow:0 1px 2px rgba(0,0,0,.12);display:flex;align-items:center;gap:8px;margin-top:2px">
-                    <div style="width:26px;height:32px;background:#129E8C;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0">PDF</div>
-                    <div>
-                      <div style="font-size:10px;font-weight:700;color:#111;line-height:1.3">Boleto_Negociacao_Mentore.pdf</div>
-                      <div style="font-size:8px;color:#888;margin-top:1px">Vencimento em 3 dias</div>
-                    </div>
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Acho que uns R$ 200 por mês daria pra mim <span class="msg-t out">10:04</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Consultando as opções disponíveis para o seu perfil... ⏳
+                    <div class="msg-time">10:04</div>
                   </div>
                   <div class="msg msg-in" style="margin-top:3px">
                     <div class="bot-label">🤖 Mêntore</div>
-                    Boleto gerado com <b>15% de desconto</b> ✅<br>Pode pagar por aqui mesmo ou copiar o código de barras.
-                    <div class="msg-time">09:04</div>
+                    Consegui! Aqui estão duas opções que cabem no que você falou:<br><br>
+                    📅 <b>Opção A</b> — 10x de <b>R$ 196,00</b> (sem juros)<br>
+                    📅 <b>Opção B</b> — 12x de <b>R$ 172,00</b> (com correção mínima de 0,8% a.m.)<br><br>
+                    Qual faz mais sentido pra você?
+                    <div class="msg-time">10:05</div>
                   </div>
                 </div>
 
                 <div class="msg-step" id="rs4">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">[Comprovante enviado 📎] <span class="msg-t out">09:11</span></div></div>
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">A opção B. 12x fica melhor pra mim <span class="msg-t out">10:06</span></div></div>
                   <div class="msg msg-in">
                     <div class="bot-label">🤖 Mêntore</div>
-                    🎉 Pagamento confirmado! Sua situação está <b>regularizada</b>.<br><br>
-                    Obrigado por resolver direto com a Mêntore. 💚
-                    <div class="msg-time">09:12</div>
+                    Ótimo! 🎯 Então ficamos assim:<br><br>
+                    ✅ <b>12x de R$ 172,00</b><br>
+                    📅 Primeira parcela: 10/07/2026<br>
+                    📧 Contrato enviado para: ca***a@gmail.com<br><br>
+                    Para formalizar o acordo, preciso confirmar que é você mesmo. Vou pedir uma <b>biometria facial</b>, tudo bem?
+                    <div class="msg-time">10:06</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('rec',5)">📷 Fazer biometria facial</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="rs5">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">[Selfie enviada 📸] <span class="msg-t out">10:07</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    ✅ <b>Identidade confirmada!</b> Formalizando acordo...
+                    <div class="msg-time">10:07</div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="rs6">
+                  <div style="background:#fff;border-radius:0 8px 8px 8px;padding:8px 10px;align-self:flex-start;max-width:84%;box-shadow:0 1px 2px rgba(0,0,0,.12);display:flex;align-items:center;gap:8px;margin-top:2px">
+                    <div style="width:26px;height:32px;background:#129E8C;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0">PDF</div>
+                    <div>
+                      <div style="font-size:10px;font-weight:700;color:#111;line-height:1.3">Acordo_Parcelamento_Mentore.pdf</div>
+                      <div style="font-size:8px;color:#888;margin-top:1px">Assinado digitalmente · 12x R$ 172,00</div>
+                    </div>
+                  </div>
+                  <div class="msg msg-in" style="margin-top:3px">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    🎉 <b>Acordo formalizado, Camila!</b><br><br>
+                    O contrato assinado foi enviado para o seu e-mail cadastrado. Guarda ele! 📧<br><br>
+                    Qualquer dúvida sobre as parcelas, é só me chamar aqui mesmo. Tamo junto! 💚
+                    <div class="msg-time">10:08</div>
                   </div>
                 </div>
 
@@ -1054,29 +1104,64 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
           </div>
         </div>
         <div class="ctrl-row">
-          <button class="ctrl-btn active" id="b-rec-1" onclick="go('rec',1)">Aviso</button>
-          <button class="ctrl-btn" id="b-rec-2" onclick="go('rec',2)">Ofertas</button>
-          <button class="ctrl-btn" id="b-rec-3" onclick="go('rec',3)">Boleto</button>
-          <button class="ctrl-btn" id="b-rec-4" onclick="go('rec',4)">Confirmação</button>
-          <button class="rst-btn" onclick="rst('rec',4)">↺</button>
+          <button class="ctrl-btn active" id="b-rec-1" onclick="go('rec',1)">Abordagem</button>
+          <button class="ctrl-btn" id="b-rec-2" onclick="go('rec',2)">Contexto</button>
+          <button class="ctrl-btn" id="b-rec-3" onclick="go('rec',3)">Negociação</button>
+          <button class="ctrl-btn" id="b-rec-4" onclick="go('rec',4)">Proposta</button>
+          <button class="ctrl-btn" id="b-rec-5" onclick="go('rec',5)">Biometria</button>
+          <button class="ctrl-btn" id="b-rec-6" onclick="go('rec',6)">Acordo</button>
+          <button class="rst-btn" onclick="rst('rec',6)">↺</button>
         </div>
       </div>
 
       <div>
         <div class="card" style="margin-bottom:1.5rem">
-          <div class="eyebrow" style="margin-bottom:.8rem">Por que isso importa para a Mêntore</div>
+          <div class="eyebrow" style="margin-bottom:.8rem">Como o agente de IA opera</div>
           <div class="flow-steps">
-            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Régua proativa:</strong> dispara antes do vencimento, reduzindo volume de inadimplência</div></div>
-            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Negociação automatizada:</strong> oferece condições pré-aprovadas sem precisar de atendente</div></div>
-            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Boleto único na conversa:</strong> elimina o atrito de buscar o pagamento em outro canal</div></div>
-            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Transbordo humano:</strong> casos sensíveis ou sem resposta seguem para o atendente, com contexto completo</div></div>
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Leitura do perfil:</strong> o agente consulta a base de dados da Mêntore — histórico, comportamento de pagamento e margem de negociação disponível para aquele cliente</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Escuta ativa:</strong> em vez de apresentar um menu fixo, o agente pergunta quanto o cliente consegue pagar e adapta as propostas à resposta dele</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Proposta dinâmica:</strong> calcula em tempo real as condições que cabem no valor informado, dentro dos limites de política definidos pela Mêntore</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Formalização com biometria:</strong> o acordo é assinado digitalmente com validação facial — sem sair do WhatsApp</div></div>
+            <div class="fs-item"><div class="fs-num">5</div><div class="fs-body"><strong>Confirmação por e-mail:</strong> o contrato é enviado automaticamente para o e-mail cadastrado, com transparência e rastreabilidade total</div></div>
           </div>
         </div>
-        <div class="tag-row">
-          <span class="tag tr">Régua de Comunicação</span>
-          <span class="tag tg">Boleto na Conversa</span>
-          <span class="tag tb">Renegociação Automática</span>
+
+        <div class="card2" style="border-color:rgba(18,158,140,.2);margin-bottom:1.25rem">
+          <div style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">O diferencial</div>
+          <p style="font-size:.8rem;color:var(--muted);line-height:1.65">Diferente de um chatbot com botões fixos, o agente de IA <strong style="color:var(--text)">não parte de uma proposta pronta</strong> — ele ouve o cliente primeiro. Isso aumenta a taxa de acordo porque a proposta final reflete o que o cliente disse que consegue pagar, não o que o banco acha que ele deveria pagar.</p>
         </div>
+
+        <div class="tag-row">
+          <span class="tag tr">Agente de IA</span>
+          <span class="tag tb">Negociação Dinâmica</span>
+          <span class="tag tg">Biometria Facial</span>
+          <span class="tag to">Acordo por E-mail</span>
+        </div>
+
+        <!-- POC highlight -->
+        <div style="margin-top:2rem;background:linear-gradient(135deg,rgba(18,158,140,.12),rgba(28,200,238,.08));border:1px solid rgba(18,158,140,.35);border-radius:16px;padding:1.5rem 1.75rem;position:relative;overflow:hidden">
+          <div style="position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--blip));border-radius:16px 16px 0 0"></div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="font-size:1.4rem;flex-shrink:0;margin-top:2px">🚀</div>
+            <div>
+              <div style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem">POC disponível</div>
+              <div style="font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:.45rem">Podemos rodar essa jornada como piloto na operação da Mêntore.</div>
+              <p style="font-size:.8rem;color:var(--muted);line-height:1.65;margin-bottom:.75rem">A Blip consegue estruturar uma POC de recuperação de crédito com agente de negociação em produção real — com uma base de clientes definida pela Mêntore, métricas de conversão abertas e modelo comercial construído a partir do resultado. <strong style="color:var(--text)">Sem risco de contrato longo antes de ver o retorno.</strong></p>
+              <div style="display:flex;gap:1rem;flex-wrap:wrap">
+                <div style="display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--muted)">
+                  <span style="color:var(--green);font-weight:700">✓</span> Base de clientes definida pela Mêntore
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--muted)">
+                  <span style="color:var(--green);font-weight:700">✓</span> Métricas abertas em tempo real
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--muted)">
+                  <span style="color:var(--green);font-weight:700">✓</span> Modelo comercial baseado em resultado
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1085,13 +1170,13 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
 <div class="divider"></div>
 
 <!-- ══════════════════════════════════════
-     OFERTA DE CARTÃO
+     SEGURO DE VIDA CONTEXTUALIZADO
 ══════════════════════════════════════ -->
-<section id="cartao" style="padding:6rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,#0A0F18 100%)">
+<section id="seguro" style="padding:6rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,#0A0F18 100%)">
   <div style="max-width:1300px;margin:0 auto">
     <div class="eyebrow">Caso de uso</div>
-    <h2 class="section-title" style="max-width:700px">Oferta de cartão: do convite à ativação, sem sair do WhatsApp.</h2>
-    <p class="section-desc">Cliente elegível recebe a oferta, escolhe a bandeira e o limite, confirma o endereço de entrega e acompanha o status — tudo dentro da mesma conversa que já usa para falar com a Mêntore.</p>
+    <h2 class="section-title" style="max-width:700px">Seguro de vida: o agente explica, tira dúvidas e fecha a venda no momento certo.</h2>
+    <p class="section-desc">Logo após uma negociação de crédito concluída, o cliente está no canal, engajado e de bom humor. É o momento ideal para o agente oferecer proteção. Ele explica com calma, responde objeções e finaliza a venda sem sair da conversa.</p>
 
     <div class="split rev">
       <div class="phone-col">
@@ -1104,89 +1189,119 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
                 <div class="wa-ci"><div class="wa-cn">Mêntore</div><div class="wa-cs">✓ Conta verificada</div></div>
                 <div class="wa-ha">📞 ⋮</div>
               </div>
-              <div class="wa-body" id="wa-cart">
+              <div class="wa-body" id="wa-seg">
                 <div class="date-chip">Hoje</div>
 
-                <div class="msg-step on" id="carts1">
+                <div class="msg-step on" id="segs1">
                   <div class="msg msg-in">
                     <div class="bot-label">🤖 Mêntore</div>
-                    Oi, <b>Felipe!</b> 🎉 Você foi <b>pré-aprovado</b> para o Cartão Mêntore, sem anuidade no 1º ano.
-                    <div class="msg-time">14:02</div>
+                    Camila, agora que o acordo tá fechado, quero te mostrar uma coisa. 🙏<br><br>
+                    Você acabou de proteger seu crédito. Mas e a sua <b>família</b>? Tenho uma opção de <b>Seguro de Vida</b> que pode te dar essa tranquilidade por menos de R$ 1 por dia. Posso te explicar?
+                    <div class="msg-time">10:10</div>
                   </div>
                   <div class="wa-btns-wrap">
-                    <button class="wa-btn" onclick="show('cart',2)">💳 Quero solicitar</button>
-                    <button class="wa-btn" onclick="show('cart',2)">❓ Ver condições</button>
+                    <button class="wa-btn" onclick="show('seg',2)">💛 Quero saber mais</button>
+                    <button class="wa-btn" onclick="show('seg',2)">❓ Que seguro é esse?</button>
                   </div>
                 </div>
 
-                <div class="msg-step" id="carts2">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">Quero solicitar <span class="msg-t out">14:03</span></div></div>
-                  <div class="wa-block">
-                    <div class="msg msg-in no-br-btns">
-                      <div class="bot-label">🤖 Mêntore</div>
-                      Qual limite inicial você prefere?<br><br>
-                      💰 <b>R$ 2.500</b> — aprovação imediata<br>
-                      💰 <b>R$ 4.000</b> — sujeito a análise rápida
-                      <div class="msg-time">14:03</div>
-                    </div>
-                    <div class="wa-btns-wrap">
-                      <button class="wa-btn" onclick="show('cart',3)">💰 R$ 2.500</button>
-                      <button class="wa-btn" onclick="show('cart',3)">💰 R$ 4.000</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="msg-step" id="carts3">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">R$ 2.500 <span class="msg-t out">14:04</span></div></div>
+                <div class="msg-step" id="segs2">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Que seguro é esse? <span class="msg-t out">10:11</span></div></div>
                   <div class="msg msg-in">
                     <div class="bot-label">🤖 Mêntore</div>
-                    Confirmado! Vamos enviar para o endereço cadastrado:<br><b>Rua das Acácias, 120 — São Paulo</b><br><br>
-                    Está certo?
-                    <div class="msg-time">14:04</div>
+                    É o <b>Mêntore Vida</b> 🛡️ — um seguro de vida simples, sem burocracia e sem carência.<br><br>
+                    ✅ Cobertura por morte natural ou acidental<br>
+                    ✅ Indenização de <b>R$ 50.000</b> para seus beneficiários<br>
+                    ✅ <b>R$ 29,90/mês</b> — desconta direto da conta<br>
+                    ✅ Cancela quando quiser, sem multa<br><br>
+                    Tem alguma dúvida?
+                    <div class="msg-time">10:11</div>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="segs3">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">E se eu já tiver outro seguro? Compensa ter dois? <span class="msg-t out">10:12</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Ótima pergunta! Seguros de vida são <b>acumulativos</b> — se tiver dois, seus beneficiários recebem os dois valores. 💡<br><br>
+                    Mas mais importante: muita gente acha que tem seguro de vida pelo trabalho, mas ele cobre só enquanto você tá empregado. O Mêntore Vida é seu, independente de onde você trabalha.<br><br>
+                    Faz sentido?
+                    <div class="msg-time">10:13</div>
                   </div>
                   <div class="wa-btns-wrap">
-                    <button class="wa-btn" onclick="show('cart',4)">✅ Confirmar endereço</button>
+                    <button class="wa-btn" onclick="show('seg',4)">✅ Faz sentido, quero contratar</button>
+                    <button class="wa-btn" onclick="show('seg',4)">🤔 Deixa eu pensar</button>
                   </div>
                 </div>
 
-                <div class="msg-step" id="carts4">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">✅ Confirmar endereço <span class="msg-t out">14:05</span></div></div>
+                <div class="msg-step" id="segs4">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Faz sentido, quero contratar <span class="msg-t out">10:14</span></div></div>
                   <div class="msg msg-in">
                     <div class="bot-label">🤖 Mêntore</div>
-                    🎉 <b>Pedido concluído!</b> Seu cartão chega em até 7 dias úteis.<br><br>
-                    Você pode acompanhar o rastreio direto aqui no WhatsApp. 📦
-                    <div class="msg-time">14:05</div>
+                    Que decisão incrível, Camila! 🎉<br><br>
+                    Vou confirmar os dados:<br>
+                    👤 Camila Souza<br>
+                    📅 Início: 01/07/2026<br>
+                    💳 R$ 29,90/mês — débito automático<br><br>
+                    Confirma a contratação?
+                    <div class="msg-time">10:14</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('seg',5)">✅ Confirmar contratação</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="segs5">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">✅ Confirmar contratação <span class="msg-t out">10:15</span></div></div>
+                  <div style="background:#fff;border-radius:0 8px 8px 8px;padding:8px 10px;align-self:flex-start;max-width:84%;box-shadow:0 1px 2px rgba(0,0,0,.12);display:flex;align-items:center;gap:8px;margin-top:2px">
+                    <div style="width:26px;height:32px;background:#129E8C;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0">PDF</div>
+                    <div>
+                      <div style="font-size:10px;font-weight:700;color:#111;line-height:1.3">Apolice_MentoreVida_2026.pdf</div>
+                      <div style="font-size:8px;color:#888;margin-top:1px">Cobertura R$ 50.000 · R$ 29,90/mês</div>
+                    </div>
+                  </div>
+                  <div class="msg msg-in" style="margin-top:3px">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    🛡️ <b>Seguro contratado!</b> Sua apólice foi enviada para o e-mail cadastrado.<br><br>
+                    A sua família agora tem uma proteção a mais. Qualquer dúvida, é só chamar. 💚
+                    <div class="msg-time">10:15</div>
                   </div>
                 </div>
 
               </div>
-              <div class="wa-input-bar"><div class="wa-inp" id="inp-cart">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('cart')">➤</button></div>
+              <div class="wa-input-bar"><div class="wa-inp" id="inp-seg">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('seg')">➤</button></div>
             </div>
           </div>
         </div>
         <div class="ctrl-row">
-          <button class="ctrl-btn active" id="b-cart-1" onclick="go('cart',1)">Oferta</button>
-          <button class="ctrl-btn" id="b-cart-2" onclick="go('cart',2)">Limite</button>
-          <button class="ctrl-btn" id="b-cart-3" onclick="go('cart',3)">Endereço</button>
-          <button class="ctrl-btn" id="b-cart-4" onclick="go('cart',4)">Confirmação</button>
-          <button class="rst-btn" onclick="rst('cart',4)">↺</button>
+          <button class="ctrl-btn active" id="b-seg-1" onclick="go('seg',1)">Oferta</button>
+          <button class="ctrl-btn" id="b-seg-2" onclick="go('seg',2)">Explicação</button>
+          <button class="ctrl-btn" id="b-seg-3" onclick="go('seg',3)">Objeção</button>
+          <button class="ctrl-btn" id="b-seg-4" onclick="go('seg',4)">Confirmação</button>
+          <button class="ctrl-btn" id="b-seg-5" onclick="go('seg',5)">Apólice</button>
+          <button class="rst-btn" onclick="rst('seg',5)">↺</button>
         </div>
       </div>
 
       <div>
         <div class="card" style="margin-bottom:1.5rem">
-          <div class="eyebrow" style="margin-bottom:.8rem">Por que isso importa para a Mêntore</div>
+          <div class="eyebrow" style="margin-bottom:.8rem">Por que esse momento funciona</div>
           <div class="flow-steps">
-            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Oferta direcionada:</strong> elegibilidade calculada previamente, sem incomodar quem não se qualifica</div></div>
-            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Escolha guiada:</strong> bandeira e limite apresentados de forma simples, com poucos toques</div></div>
-            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Confirmação de dados:</strong> endereço e contato validados antes do envio físico</div></div>
-            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Acompanhamento pós-venda:</strong> status de entrega e ativação sem precisar ligar para a central</div></div>
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Contexto emocional ideal:</strong> o cliente acabou de resolver um problema — ele está aliviado e receptivo. É o melhor momento para falar em proteção</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Agente que responde objeções:</strong> diferente de um banner ou push, o agente de IA ouve as dúvidas e responde com argumentos personalizados</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Sem fricção:</strong> o débito já é da conta Mêntore — não precisa de novo cadastro, cartão ou boleto</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Apólice por e-mail:</strong> o documento é enviado automaticamente no fechamento, com validade jurídica</div></div>
           </div>
         </div>
+        <div class="card2" style="border-color:rgba(0,194,111,.18);margin-bottom:1.25rem">
+          <div style="font-size:.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">O diferencial</div>
+          <p style="font-size:.8rem;color:var(--muted);line-height:1.65">A venda de seguro contextualizada após um crédito tem conversão historicamente maior que campanhas frias. O cliente já está no canal, o agente já tem confiança estabelecida e a oferta faz sentido naquele exato momento de vida.</p>
+        </div>
         <div class="tag-row">
-          <span class="tag tr">Oferta Pré-Aprovada</span>
-          <span class="tag tb">Escolha de Limite</span>
-          <span class="tag tg">Rastreio na Conversa</span>
+          <span class="tag tg">Venda Contextualizada</span>
+          <span class="tag tb">Agente com Objeção</span>
+          <span class="tag tr">Apólice por E-mail</span>
+          <span class="tag to">Zero Fricção</span>
         </div>
       </div>
     </div>
@@ -1196,15 +1311,56 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
 <div class="divider"></div>
 
 <!-- ══════════════════════════════════════
-     TRANSACIONAL COM BIOMETRIA
+     ALERTA E PREVENÇÃO DE FRAUDE
 ══════════════════════════════════════ -->
-<section id="biometria" style="padding:6rem 2rem">
+<section id="fraude" style="padding:6rem 2rem">
   <div style="max-width:1300px;margin:0 auto">
     <div class="eyebrow">Caso de uso</div>
-    <h2 class="section-title" style="max-width:700px">Transacional com biometria: segurança em cada movimentação.</h2>
-    <p class="section-desc">Consultas de saldo seguem livres. Para transferências e valores mais altos, a IA exige validação biométrica antes de confirmar — sem precisar integrar com o sistema "caixa preta" do parceiro de folha de pagamento.</p>
+    <h2 class="section-title" style="max-width:700px">Alerta de fraude: o WhatsApp chega antes do golpe.</h2>
+    <p class="section-desc">Notificação de app, o cliente ignora. WhatsApp, ele vê em segundos. Quando uma transação suspeita acontece, o agente entra em contato imediatamente, descreve a movimentação e pede confirmação — tudo por texto, sem precisar de biometria.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-bottom:3rem">
+      <div style="background:rgba(255,107,0,.07);border:1px solid rgba(255,107,0,.2);border-radius:14px;padding:1.1rem 1.25rem;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:1.3rem;flex-shrink:0">📵</div>
+        <div>
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:.25rem">Notificação de app? Ignorada.</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">A maioria dos usuários não ativa push do banco. WhatsApp tem taxa de abertura acima de 95%</div>
+        </div>
+      </div>
+      <div style="background:rgba(28,200,238,.07);border:1px solid rgba(28,200,238,.18);border-radius:14px;padding:1.1rem 1.25rem;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:1.3rem;flex-shrink:0">⚡</div>
+        <div>
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:.25rem">Resposta em segundos</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">O alerta sai imediatamente após a detecção — antes que o golpe seja concluído</div>
+        </div>
+      </div>
+      <div style="background:rgba(18,158,140,.07);border:1px solid rgba(18,158,140,.2);border-radius:14px;padding:1.1rem 1.25rem;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:1.3rem;flex-shrink:0">💬</div>
+        <div>
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:.25rem">Só texto, sem biometria</div>
+          <div style="font-size:.74rem;color:var(--muted);line-height:1.5">O cliente aprova ou nega com uma resposta simples — menos fricção, mais agilidade</div>
+        </div>
+      </div>
+    </div>
 
     <div class="split">
+      <div>
+        <div class="card" style="margin-bottom:1.5rem">
+          <div class="eyebrow" style="margin-bottom:.8rem">Como o agente age</div>
+          <div class="flow-steps">
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Detecção em tempo real:</strong> sistema identifica padrão atípico — valor, localização ou horário fora do comportamento habitual do cliente</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Alerta imediato no WhatsApp:</strong> agente descreve exatamente a transação e pergunta se foi o cliente</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Confirmação por texto:</strong> cliente responde "sim" ou "não" — sem precisar abrir app, fazer selfie ou digitar senha</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Ação automática:</strong> se confirmar fraude, o agente bloqueia o cartão e abre protocolo — tudo na mesma conversa</div></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag to">Detecção em Tempo Real</span>
+          <span class="tag tb">Aprovação por Texto</span>
+          <span class="tag tr">Bloqueio Automático</span>
+        </div>
+      </div>
+
       <div class="phone-col">
         <div class="phone-wrap">
           <div class="phone-frame">
@@ -1215,64 +1371,189 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
                 <div class="wa-ci"><div class="wa-cn">Mêntore</div><div class="wa-cs">✓ Conta verificada</div></div>
                 <div class="wa-ha">📞 ⋮</div>
               </div>
-              <div class="wa-body" id="wa-bio">
+              <div class="wa-body" id="wa-fra">
                 <div class="date-chip">Hoje</div>
 
-                <div class="msg-step on" id="bios1">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">Quero transferir R$ 1.200 para João <span class="msg-t out">16:40</span></div></div>
-                  <div class="msg msg-in">
-                    <div class="bot-label">🤖 Mêntore</div>
-                    Para transferências acima de R$ 500, preciso confirmar que é <b>você mesmo</b> 🔐
-                    <div class="msg-time">16:40</div>
+                <div class="msg-step on" id="fras1">
+                  <div class="msg msg-in" style="border-left:3px solid #FF6B00">
+                    <div class="bot-label">🚨 Mêntore · Alerta</div>
+                    <b>Transação suspeita detectada!</b><br><br>
+                    💳 Cartão final <b>4521</b><br>
+                    🏪 Loja: <b>Eletro Fortaleza</b><br>
+                    💰 Valor: <b>R$ 2.340,00</b><br>
+                    📍 Local: Fortaleza, CE<br>
+                    🕐 Agora · 15:43<br><br>
+                    <b>Foi você?</b>
+                    <div class="msg-time">15:43</div>
                   </div>
                   <div class="wa-btns-wrap">
-                    <button class="wa-btn" onclick="show('bio',2)">📷 Validar com biometria facial</button>
+                    <button class="wa-btn" onclick="show('fra',2)" style="color:#00C26F">✅ Sim, fui eu</button>
+                    <button class="wa-btn" onclick="show('fra',3)" style="color:#ef4444">🚫 Não fui eu</button>
                   </div>
                 </div>
 
-                <div class="msg-step" id="bios2">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">[Selfie enviada 📸] <span class="msg-t out">16:41</span></div></div>
+                <div class="msg-step" id="fras2">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Sim, comprei lá sim. Era eu mesmo! <span class="msg-t out">15:44</span></div></div>
                   <div class="msg msg-in">
                     <div class="bot-label">🤖 Mêntore</div>
-                    Analisando... ⏳
-                    <div class="msg-time">16:41</div>
+                    Ótimo, fico feliz que tenha sido você! ✅<br><br>
+                    Transação <b>confirmada e liberada</b>. Suas compras seguem normalmente.<br><br>
+                    Se quiser, posso ativar alertas automáticos para compras acima de R$ 500 no futuro. É só falar! 😊
+                    <div class="msg-time">15:44</div>
                   </div>
                 </div>
 
-                <div class="msg-step" id="bios3">
-                  <div class="msg msg-in">
-                    <div class="bot-label">🤖 Mêntore</div>
-                    ✅ <b>Identidade confirmada!</b><br><br>
-                    Transferência de <b>R$ 1.200,00</b> para João Pereira — confirma o envio?
-                    <div class="msg-time">16:41</div>
+                <div class="msg-step" id="fras3">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Não, não fiz essa compra! Podem ter clonado meu cartão 😨 <span class="msg-t out">15:44</span></div></div>
+                  <div class="msg msg-in" style="border-left:3px solid #ef4444">
+                    <div class="bot-label">🚨 Mêntore</div>
+                    Entendido! Agindo agora mesmo, não se preocupe 🔒<br><br>
+                    🔴 Cartão <b>final 4521 bloqueado</b> imediatamente<br>
+                    📋 Protocolo de contestação: <b>#2026-78432</b><br>
+                    💰 Valor contestado: <b>R$ 2.340,00</b><br>
+                    📧 Detalhes enviados para seu e-mail<br><br>
+                    Quer que eu já solicite um <b>novo cartão</b> para você agora?
+                    <div class="msg-time">15:44</div>
                   </div>
                   <div class="wa-btns-wrap">
-                    <button class="wa-btn" onclick="show('bio',4)">✅ Confirmar transferência</button>
-                    <button class="wa-btn" onclick="show('bio',4)">✕ Cancelar</button>
+                    <button class="wa-btn" onclick="show('fra',4)">💳 Sim, quero novo cartão</button>
+                    <button class="wa-btn" onclick="show('fra',4)">⏳ Depois eu vejo</button>
                   </div>
                 </div>
 
-                <div class="msg-step" id="bios4">
-                  <div class="wa-block wa-block-out"><div class="msg msg-out">✅ Confirmar transferência <span class="msg-t out">16:42</span></div></div>
+                <div class="msg-step" id="fras4">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Sim, quero novo cartão <span class="msg-t out">15:45</span></div></div>
                   <div class="msg msg-in">
                     <div class="bot-label">🤖 Mêntore</div>
-                    🎉 Transferência concluída com sucesso!<br><br>
-                    Comprovante disponível aqui mesmo, sempre que precisar.
-                    <div class="msg-time">16:42</div>
+                    Novo cartão solicitado! 🎉<br><br>
+                    📦 Entrega em: <b>Rua das Palmeiras, 88 — SP</b><br>
+                    📅 Prazo: <b>5 a 7 dias úteis</b><br>
+                    🔢 Final do novo cartão: <b>7893</b><br><br>
+                    Dentro de <b>24h</b> nossa equipe de segurança também entrará em contato sobre a contestação. Fique tranquilo, tamos do seu lado! 💚
+                    <div class="msg-time">15:45</div>
                   </div>
                 </div>
 
               </div>
-              <div class="wa-input-bar"><div class="wa-inp" id="inp-bio">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('bio')">➤</button></div>
+              <div class="wa-input-bar"><div class="wa-inp" id="inp-fra">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('fra')">➤</button></div>
             </div>
           </div>
         </div>
         <div class="ctrl-row">
-          <button class="ctrl-btn active" id="b-bio-1" onclick="go('bio',1)">Pedido</button>
-          <button class="ctrl-btn" id="b-bio-2" onclick="go('bio',2)">Biometria</button>
-          <button class="ctrl-btn" id="b-bio-3" onclick="go('bio',3)">Validação</button>
-          <button class="ctrl-btn" id="b-bio-4" onclick="go('bio',4)">Confirmação</button>
-          <button class="rst-btn" onclick="rst('bio',4)">↺</button>
+          <button class="ctrl-btn active" id="b-fra-1" onclick="go('fra',1)">Alerta</button>
+          <button class="ctrl-btn" id="b-fra-2" onclick="go('fra',2)">✅ Era eu</button>
+          <button class="ctrl-btn" id="b-fra-3" onclick="go('fra',3)">🚫 Fraude!</button>
+          <button class="ctrl-btn" id="b-fra-4" onclick="go('fra',4)">💳 Novo cartão</button>
+          <button class="rst-btn" onclick="rst('fra',4)">↺</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     ANTECIPAÇÃO DE RECEBÍVEIS PJ
+══════════════════════════════════════ -->
+<section id="antecipacao" style="padding:6rem 2rem;background:linear-gradient(180deg,var(--dark) 0%,#0A0F18 100%)">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="eyebrow">Caso de uso · PJ</div>
+    <h2 class="section-title" style="max-width:700px">Antecipação de recebíveis: o agente identifica a necessidade antes do cliente perceber.</h2>
+    <p class="section-desc">Quando o fluxo de caixa do cliente PJ aperta, o agente detecta o padrão, oferece antecipação de recebíveis com simulação de taxa e permite que o empresário aceite ou negocie — tudo no WhatsApp, sem formulário ou visita à agência.</p>
+
+    <div class="split rev">
+      <div class="phone-col">
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="nc"></div><div class="ns"></div></div>
+            <div class="wa">
+              <div class="wa-hdr">
+                <div class="wa-av"></div>
+                <div class="wa-ci"><div class="wa-cn">Mêntore Empresas</div><div class="wa-cs">✓ Conta verificada</div></div>
+                <div class="wa-ha">📞 ⋮</div>
+              </div>
+              <div class="wa-body" id="wa-ant">
+                <div class="date-chip">Hoje</div>
+
+                <div class="msg-step on" id="ants1">
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Oi, <b>Ricardo!</b> 👋<br><br>
+                    Analisei o fluxo de caixa da <b>RC Distribuidora</b> e percebi que o saldo tá mais apertado essa semana — mas vocês têm <b>R$ 18.400</b> em recebíveis previstos para os próximos 30 dias.<br><br>
+                    Quer antecipar agora e ter esse valor disponível <b>hoje</b>?
+                    <div class="msg-time">09:15</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('ant',2)">📊 Ver simulação</button>
+                    <button class="wa-btn" onclick="show('ant',2)">❓ Como funciona?</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="ants2">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Ver simulação <span class="msg-t out">09:16</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Aqui está a simulação para os seus recebíveis:<br><br>
+                    💰 Valor disponível: <b>R$ 18.400</b><br>
+                    📉 Taxa: <b>1,6% a.m.</b> (seu perfil garante essa condição)<br>
+                    💵 Você recebe líquido: <b>R$ 17.908</b><br>
+                    📅 Crédito na conta: <b>hoje em até 2h</b><br><br>
+                    Quer antecipar todo o valor ou uma parte?
+                    <div class="msg-time">09:16</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('ant',3)">💰 Antecipar tudo</button>
+                    <button class="wa-btn" onclick="show('ant',3)">✏️ Quero antecipar um valor menor</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="ants3">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">Antecipar tudo <span class="msg-t out">09:17</span></div></div>
+                  <div class="msg msg-in">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    Confirmando a operação:<br><br>
+                    🏢 RC Distribuidora<br>
+                    💵 Valor líquido: <b>R$ 17.908,00</b><br>
+                    📅 Crédito hoje · até 11:30<br>
+                    📧 CCB enviada para: ri***o@rcdistrib.com.br<br><br>
+                    Confirma?
+                    <div class="msg-time">09:17</div>
+                  </div>
+                  <div class="wa-btns-wrap">
+                    <button class="wa-btn" onclick="show('ant',4)">✅ Confirmar operação</button>
+                  </div>
+                </div>
+
+                <div class="msg-step" id="ants4">
+                  <div class="wa-block wa-block-out"><div class="msg msg-out">✅ Confirmar operação <span class="msg-t out">09:18</span></div></div>
+                  <div style="background:#fff;border-radius:0 8px 8px 8px;padding:8px 10px;align-self:flex-start;max-width:84%;box-shadow:0 1px 2px rgba(0,0,0,.12);display:flex;align-items:center;gap:8px;margin-top:2px">
+                    <div style="width:26px;height:32px;background:#129E8C;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0">PDF</div>
+                    <div>
+                      <div style="font-size:10px;font-weight:700;color:#111;line-height:1.3">CCB_Antecipacao_RC_Distribuidora.pdf</div>
+                      <div style="font-size:8px;color:#888;margin-top:1px">R$ 17.908,00 · crédito em até 2h</div>
+                    </div>
+                  </div>
+                  <div class="msg msg-in" style="margin-top:3px">
+                    <div class="bot-label">🤖 Mêntore</div>
+                    🎉 <b>Operação aprovada, Ricardo!</b><br><br>
+                    R$ 17.908 já estão a caminho da conta da RC Distribuidora. A CCB foi enviada para o e-mail do CNPJ. 📧<br><br>
+                    Qualquer coisa, tô aqui! 💚
+                    <div class="msg-time">09:18</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="wa-input-bar"><div class="wa-inp" id="inp-ant">Digite uma mensagem...</div><button class="wa-send" onclick="sendMsg('ant')">➤</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="ctrl-row">
+          <button class="ctrl-btn active" id="b-ant-1" onclick="go('ant',1)">Detecção</button>
+          <button class="ctrl-btn" id="b-ant-2" onclick="go('ant',2)">Simulação</button>
+          <button class="ctrl-btn" id="b-ant-3" onclick="go('ant',3)">Confirmação</button>
+          <button class="ctrl-btn" id="b-ant-4" onclick="go('ant',4)">Crédito</button>
+          <button class="rst-btn" onclick="rst('ant',4)">↺</button>
         </div>
       </div>
 
@@ -1280,21 +1561,27 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
         <div class="card" style="margin-bottom:1.5rem">
           <div class="eyebrow" style="margin-bottom:.8rem">Por que isso importa para a Mêntore</div>
           <div class="flow-steps">
-            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Camada de segurança extra:</strong> biometria facial exigida acima de um valor configurável</div></div>
-            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Sem fricção desnecessária:</strong> consultas simples seguem livres, só transações sensíveis pedem validação</div></div>
-            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Independente dos legados:</strong> a validação roda na camada conversacional, sem depender da integração com o sistema do parceiro de folha</div></div>
-            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Comprovante automático:</strong> reduz volume de "preciso do comprovante" no atendimento humano</div></div>
+            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Proativo, não reativo:</strong> o agente identifica o aperto de caixa pelo comportamento da conta antes que o cliente precise pedir</div></div>
+            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>Taxa personalizada:</strong> a condição é calculada com base no perfil e histórico do cliente PJ, não em tabela genérica</div></div>
+            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Zero burocracia:</strong> simulação, confirmação e CCB — tudo no WhatsApp, sem formulário de crédito ou visita à agência</div></div>
+            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Velocidade como diferencial:</strong> crédito disponível no mesmo dia — fator decisivo para micro e pequenas empresas</div></div>
           </div>
         </div>
+        <div class="card2" style="border-color:rgba(147,51,234,.2);margin-bottom:1.25rem">
+          <div style="font-size:.72rem;font-weight:700;color:#C084FC;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Público-alvo</div>
+          <p style="font-size:.8rem;color:var(--muted);line-height:1.65">MEIs, MEs e EPPs que já têm conta Mêntore. O critério de elegibilidade é o comportamento histórico de recebíveis — sem análise de crédito adicional. A Mêntore já tem os dados, o agente só precisa agir no momento certo.</p>
+        </div>
         <div class="tag-row">
-          <span class="tag tg">Biometria Facial</span>
-          <span class="tag tr">Limite Configurável</span>
-          <span class="tag tb">Comprovante Automático</span>
+          <span class="tag tp">Produto PJ</span>
+          <span class="tag tb">Detecção de Oportunidade</span>
+          <span class="tag tr">Taxa Personalizada</span>
+          <span class="tag tg">Crédito no Dia</span>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 
 <div class="divider"></div>
 
@@ -1399,64 +1686,6 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
     </div>
   </div>
 </section>
-
-<!-- ══════════════════════════════════════
-     COPILOT PARA ATENDENTES
-══════════════════════════════════════ -->
-<section id="copilot" style="padding:6rem 2rem">
-  <div style="max-width:1300px;margin:0 auto">
-    <div class="eyebrow blue">O ponto de partida combinado</div>
-    <h2 class="section-title" style="max-width:740px">Copilot: a IA sugere, o atendente decide.</h2>
-    <p class="section-desc">Sem agente preditivo autônomo agora — exatamente como a Mêntore definiu. A IA faz um scan da base de conhecimento a partir do que o cliente está pedindo e entrega ao atendente humano uma sugestão de resposta pronta para revisar e enviar, dentro do próprio Blip Desk.</p>
-
-    <div class="split">
-      <div>
-        <div class="card" style="margin-bottom:1.5rem">
-          <div class="eyebrow" style="margin-bottom:.8rem">Como funciona</div>
-          <div class="flow-steps">
-            <div class="fs-item"><div class="fs-num">1</div><div class="fs-body"><strong>Cliente escreve no WhatsApp:</strong> dúvida, reclamação ou pedido chega para o atendente em tempo real</div></div>
-            <div class="fs-item"><div class="fs-num">2</div><div class="fs-body"><strong>IA faz o scan:</strong> busca na base de conhecimento da Mêntore o que mais se aproxima do problema relatado</div></div>
-            <div class="fs-item"><div class="fs-num">3</div><div class="fs-body"><strong>Sugestão aparece para o atendente:</strong> resposta pronta, com a fonte indicada, sem enviar nada automaticamente</div></div>
-            <div class="fs-item"><div class="fs-num">4</div><div class="fs-body"><strong>Atendente revisa e decide:</strong> aceita, edita ou descarta — o controle final continua humano</div></div>
-            <div class="fs-item"><div class="fs-num">5</div><div class="fs-body"><strong>Aprendizado contínuo:</strong> cada interação aceita ou corrigida ajuda a calibrar as próximas sugestões</div></div>
-          </div>
-        </div>
-        <div class="tag-row">
-          <span class="tag tb">Copilot, não autopiloto</span>
-          <span class="tag tg">Base de conhecimento Mêntore</span>
-          <span class="tag tr">Sem integração com sistemas legados</span>
-        </div>
-      </div>
-
-      <div>
-        <div class="insight-grid">
-          <div class="ig-card">
-            <div class="ig-icon">⚡</div>
-            <div class="ig-title">Reduz tempo de resposta</div>
-            <div class="ig-text">O atendente não precisa procurar manualmente em manuais ou scripts — a sugestão já chega pronta.</div>
-          </div>
-          <div class="ig-card">
-            <div class="ig-icon">🎓</div>
-            <div class="ig-title">Constrói maturidade</div>
-            <div class="ig-text">É o passo natural antes de qualquer automação mais autônoma — a operação aprende a confiar na IA com supervisão humana.</div>
-          </div>
-          <div class="ig-card">
-            <div class="ig-icon">🔒</div>
-            <div class="ig-title">Não depende dos legados</div>
-            <div class="ig-text">Funciona sobre a base de conhecimento, sem precisar integrar com os sistemas transacionais internos ou do parceiro de folha.</div>
-          </div>
-          <div class="ig-card">
-            <div class="ig-icon">📊</div>
-            <div class="ig-title">Visibilidade de gestão</div>
-            <div class="ig-text">Permite medir quais sugestões são aceitas, editadas ou ignoradas — material concreto para evoluir a base de conhecimento.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-</section>
-
-<div class="divider"></div>
-
 <!-- ══════════════════════════════════════
      BLIP CRED
 ══════════════════════════════════════ -->
@@ -1767,8 +1996,8 @@ footer{background:#06080C;padding:3rem 2rem;text-align:center;color:var(--muted)
 
 <script>
 const state={};
-const pfx={bc:'bcs',rec:'rs',cart:'carts',bio:'bios',duv:'duvs'};
-const max={bc:5,rec:4,cart:4,bio:4,duv:4};
+const pfx={bc:'bcs',rec:'rs',seg:'segs',fra:'fras',ant:'ants',duv:'duvs'};
+const max={bc:5,rec:6,seg:5,fra:4,ant:4,duv:4};
 
 function sendMsg(f){
   const cur=state[f]||1;
